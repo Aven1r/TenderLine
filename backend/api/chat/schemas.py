@@ -1,5 +1,7 @@
 from pydantic import BaseModel
 from datetime import datetime
+from ..documents.schemas import Document
+from ..auth.schemas import User
 
 
 class BaseChat(BaseModel):
@@ -7,39 +9,35 @@ class BaseChat(BaseModel):
 
 
 class ChatCreate(BaseChat):
-    pass
+    vendor_id: int
+    consumer_id: int
 
 
-class Chat(BaseModel):
+class Chat(BaseChat):
     id: int
+    created_at: datetime
+    vendor: User
+    consumer: User
 
 
 class BaseMessage(BaseModel):
-    pass
+    # document: Document
+    comment: str | None = None
 
 
 class MessageCreate(BaseMessage):
-    pass
+    chat_id: int
+
 
 
 class Message(BaseMessage):
     id: int
+    created_at: datetime
     chat: Chat
-    datetime: datetime
 
 
-class DokumentBlock(BaseModel):
-    id: int
-    title: str
-    text: str
 
 
-class Dokument(BaseModel):
-    id: int
-    customer: User
-    ...
-
-    body: list[DokumentBlock]
 
 
-"зочу купить у ______товар "
+

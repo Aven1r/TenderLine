@@ -1,10 +1,28 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, EmailStr
+from enum import Enum
 
 
-class Customer(BaseModel):
+class UserStatus(str, Enum):
+    CONSUMER = 'CON'
+    SUPPLIER = 'SUP'
+    COMBO = 'COM'
+
+
+class BaseUser(BaseModel):
+    name: str
+    address: str
+    email: EmailStr
+    status: UserStatus
+    password: str
+
+    class Config:
+        use_enum_values = True
+
+
+class CreateUser(BaseUser):
+    pass
+
+
+class User(BaseUser):
     id: int
-
-
-class Provider(BaseModel):
-    id: int
-
+    use_email_notification: bool = True

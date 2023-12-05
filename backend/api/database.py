@@ -1,6 +1,6 @@
 from sqlalchemy import event, Engine
-from sqlalchemy.orm import sessionmaker, DeclarativeBase
-from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, AsyncAttrs
+from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, AsyncAttrs, async_sessionmaker
 
 SQLALCHEMY_DATABASE_URL = "sqlite+aiosqlite:///db.db"
 # SQLALCHEMY_DATABASE_URL = "postgresql://user:password@postgresserver/db"
@@ -18,7 +18,7 @@ def set_sqlite_pragma(dbapi_connection, connection_record):
     cursor.close()
 
 
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, class_=AsyncSession, bind=engine, expire_on_commit=False)
+SessionLocal = async_sessionmaker(autocommit=False, autoflush=False, class_=AsyncSession, bind=engine, expire_on_commit=False)
 
 
 class Base(AsyncAttrs, DeclarativeBase):
@@ -27,5 +27,5 @@ class Base(AsyncAttrs, DeclarativeBase):
 
 async def init_models():
     async with engine.begin() as conn:
-        await conn.run_sync(Base.metadata.drop_all)
+        # await conn.run_sync(Base.metadata.drop_all)
         await conn.run_sync(Base.metadata.create_all)

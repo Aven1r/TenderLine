@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from .auth.routes import router as auth_router
 from backend.api.database import init_models
 from .chat.routes import router as chat_router
+from .documents.router import router as doc_router
 
 
 def create_app() -> FastAPI:
@@ -11,6 +12,7 @@ def create_app() -> FastAPI:
     _app = FastAPI()
     _app.include_router(chat_router)
     _app.include_router(auth_router)
+    _app.include_router(doc_router)
 
     return _app
 
