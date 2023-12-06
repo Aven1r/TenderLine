@@ -20,8 +20,7 @@ class DocumentField(BaseDocumentField):
 
 
 class BaseDocument(BaseModel):
-    customer: User
-    supplier: User
+
 
     field1: BaseDocumentField
     field2: BaseDocumentField
@@ -30,12 +29,14 @@ class BaseDocument(BaseModel):
 
 
 class DocumentCreate(BaseDocument):
-    pass
+    customer_id: int
+    supplier_id: int
 
 
 class Document(BaseDocument):
     id: int
-
+    customer: User
+    supplier: User
     conclusion_at: date
 
     field1: DocumentField

@@ -25,7 +25,8 @@ class Message(Base):
     chat = relationship('Chat', backref='messages', lazy="immediate")
     user_id = Column(Integer, ForeignKey('user.id', ondelete='CASCADE'))
     user = relationship('User', backref='messages', lazy="immediate")
-    comment = Column(String)
+    text = Column(String)
     created_at = Column(DateTime)
+    document = relationship('Document', backref='message')
 
 

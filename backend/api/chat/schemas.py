@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from datetime import datetime
-from ..documents.schemas import Document
+from ..documents.schemas import Document, DocumentCreate
 from ..auth.schemas import User
 
 
@@ -22,11 +22,12 @@ class Chat(BaseChat):
 
 class BaseMessage(BaseModel):
     # document: Document
-    comment: str | None = None
+    text: str | None = None
 
 
 class MessageCreate(BaseMessage):
     chat_id: int
+    document_id: int | None
 
 
 
@@ -34,7 +35,7 @@ class Message(BaseMessage):
     id: int
     created_at: datetime
     chat: Chat
-
+    document: Document | None = None
 
 
 
