@@ -35,13 +35,13 @@ async def init_models():
         await conn.run_sync(Base.metadata.create_all)
 
 
-cli = Typer()
-
-
-@cli.command()
-def init_db():
-    asyncio.run(init_models())
-
-
-if __name__ == '__main__':
-    cli()
+# cli = Typer()
+#
+#
+# @cli.command()
+# def init_db():
+#     asyncio.run(init_models())
+#
+#
+# if __name__ == '__main__':
+#     cli()

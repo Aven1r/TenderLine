@@ -23,6 +23,7 @@ async def create_message(session: AsyncSession, message: schemas.MessageCreate, 
     session.add(message_db)
     await session.commit()
     await session.refresh(message_db)
+    print(message_db)
     return message_db
 
 

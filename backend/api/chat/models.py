@@ -16,7 +16,6 @@ class Chat(Base):
     consumer = relationship('User', backref='chats_with_vendors', foreign_keys=consumer_id, lazy="immediate")
 
 
-
 class Message(Base):
     __tablename__ = 'message'
 
@@ -27,6 +26,6 @@ class Message(Base):
     user = relationship('User', backref='messages', lazy="immediate")
     text = Column(String)
     created_at = Column(DateTime)
-    document = relationship('Document', backref='message')
+    document = relationship('Document', uselist=False, backref='message', lazy="immediate")
 
 
