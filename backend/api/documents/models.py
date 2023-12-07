@@ -8,3 +8,7 @@ class Document(Base):
 
     id = Column(Integer, primary_key=True, autoincrement=True, index=True)
     message_id = Column(Integer, ForeignKey('message.id'), nullable=True)
+
+    previous_document_id = Column(Integer, ForeignKey('document.id'), nullable=True)
+    previous_document = relationship('Document', lazy=False)
+

@@ -2,6 +2,7 @@ from pydantic import BaseModel
 from datetime import date
 from backend.api.auth.schemas import User
 
+
 class BaseDocumentField(BaseModel):
     name: str
     description: str
@@ -19,22 +20,22 @@ class DocumentField(BaseDocumentField):
 
 
 class BaseDocument(BaseModel):
+    pass
 
-
-    field1: BaseDocumentField
-    field2: BaseDocumentField
-    field3: BaseDocumentField
-    field4: BaseDocumentField
+    # field1: BaseDocumentField
+    # field2: BaseDocumentField
+    # field3: BaseDocumentField
+    # field4: BaseDocumentField
 
 
 class DocumentCreate(BaseDocument):
-    message_id: int
+    previous_document_id: int | None
 
 
 class Document(BaseDocument):
     id: int
 
-    field1: DocumentField
-    field2: DocumentField
-    field3: DocumentField
-    field4: DocumentField
+    # field1: DocumentField
+    # field2: DocumentField
+    # field3: DocumentField
+    # field4: DocumentField

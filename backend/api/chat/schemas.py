@@ -30,12 +30,12 @@ class MessageCreate(BaseMessage):
     document: DocumentCreate | None
 
 
-
 class Message(BaseMessage):
     id: int
     created_at: datetime
     chat: Chat
-    document: Document | None = None
+    document: Document | None
+    user: User
 
 
 

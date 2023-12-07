@@ -3,6 +3,7 @@ from datetime import datetime
 from sqlalchemy.ext.asyncio import AsyncSession
 from . import schemas
 from .models import Chat, Message
+from ..documents.models import Document
 
 
 async def get_messages(session: AsyncSession, chat_id: int, user_id: int = None, limit: int = 10, skip: int = 0) -> list[Message]:
@@ -18,12 +19,15 @@ async def get_message(session: AsyncSession, chat_id: int, message_id: int) -> M
     return rez.scalar_one_or_none()
 
 
-async def create_message(session: AsyncSession, message: schemas.MessageCreate, user_id: int) -> Message:
-    message_db = Message(**message.model_dump(), user_id=user_id, created_at=datetime.now())
+async def create_message(session: AsyncSession, message: schemas.MessageCreate,  user_id: int) -> Message:
+
+    if message.document is not None:
+        message.document = Document(**message.document.model_dump())
+
+    message_db = Message(**dict(message), user_id=user_id, created_at=datetime.now())
     session.add(message_db)
     await session.commit()
     await session.refresh(message_db)
-    print(message_db)
     return message_db
 
 
