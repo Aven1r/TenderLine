@@ -4,14 +4,13 @@
     <list default="true" id="d872bad4-f605-4b7f-b98b-a0a05660a6b0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/api/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/api/auth/schemas.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/auth/schemas.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/api/chat/crud.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/chat/crud.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/chat/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/chat/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/chat/schemas.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/chat/schemas.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/database.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/database.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/api/documents/crud.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/documents/crud.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/api/documents/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/documents/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/api/documents/router.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/documents/router.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/api/documents/schemas.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/documents/schemas.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.db" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.db" beforeDir="false" afterPath="$PROJECT_DIR$/db.db" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

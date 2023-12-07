@@ -15,7 +15,7 @@ async def get_messages(session: AsyncSession, chat_id: int, user_id: int = None,
 
 
 async def get_message(session: AsyncSession, chat_id: int, message_id: int) -> Message:
-    rez = await session.execute(select(Message).where(Message.chat_id == chat_id, Message.id == message_id))
+    rez = await session.execute(select(Message).where(Message.chat_id == chat_id and Message.id == message_id))
     return rez.scalar_one_or_none()
 
 

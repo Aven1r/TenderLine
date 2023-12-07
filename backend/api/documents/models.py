@@ -1,6 +1,7 @@
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Boolean
 from sqlalchemy.orm import relationship
 from ..database import Base
+from datetime import datetime
 
 
 class Document(Base):
@@ -9,6 +10,14 @@ class Document(Base):
     id = Column(Integer, primary_key=True, autoincrement=True, index=True)
     message_id = Column(Integer, ForeignKey('message.id'), nullable=True)
 
+    consumer_id = Column(Integer, ForeignKey('user.id'), nullable=True)
+    consumer = relationship('User', foreign_keys=consumer_id, backref='documents_with_suppliers')
+
+    supplier_id = Column(Integer, ForeignKey('user.id'), nullable=True)
+    supplier = relationship('User', foreign_keys=supplier_id, backref='documents_with_consumers')
+
     previous_document_id = Column(Integer, ForeignKey('document.id'), nullable=True)
     previous_document = relationship('Document', lazy=False)
+
+    created_at = Column(DateTime, default=datetime.utcnow)
 

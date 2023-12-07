@@ -5,6 +5,7 @@ from .chat.routes import router as chat_router
 from .documents.router import router as doc_router
 import asyncio
 
+
 def create_app() -> FastAPI:
     # loop = asyncio.get_event_loop()
     # loop.run_until_complete(init_models())
@@ -25,5 +26,5 @@ app = create_app()
 
 @app.on_event("startup")
 async def on_startup():
-    # await init_models()
+    await init_models()
     pass
