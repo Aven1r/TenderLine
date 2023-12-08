@@ -160,22 +160,6 @@
       <option name="_new_targetType" value="&quot;PYTHON&quot;" />
       <method v="2" />
     </configuration>
-    <configuration name="pytest for chat_test_case.AuthTestCase" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
-      <module name="TenderLine" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/backend" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <option name="_new_keywords" value="&quot;&quot;" />
-      <option name="_new_parameters" value="&quot;&quot;" />
-      <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;chat_test_case.AuthTestCase&quot;" />
-      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
-      <method v="2" />
-    </configuration>
     <configuration name="pytest for chat_test_case.AuthTestCase.test_chat_pong" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
       <module name="TenderLine" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -244,7 +228,6 @@
       <list>
         <item itemvalue="Python tests.pytest for chat_test_case.AuthTestCase.test_chat_pong" />
         <item itemvalue="Python tests.pytest for chat_test_case.AuthTestCase.test_register_user" />
-        <item itemvalue="Python tests.pytest for chat_test_case.AuthTestCase" />
         <item itemvalue="Python tests.pytest for chat_test_case.test_root" />
         <item itemvalue="Python tests.pytest for chat_test_case.TestClient" />
       </list>
