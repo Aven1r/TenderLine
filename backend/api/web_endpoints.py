@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, Request
 from starlette.templating import Jinja2Templates
-from .api.auth.crud import get_all_users
-from backend.api.dependencies import get_user, get_db
+from .auth.crud import get_all_users
+from .dependencies import get_user, get_db
 
 router = APIRouter(
     prefix='/web',
