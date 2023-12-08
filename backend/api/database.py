@@ -3,7 +3,7 @@ import asyncio
 from sqlalchemy import event, Engine
 from sqlalchemy.orm import DeclarativeBase
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession, AsyncAttrs, async_sessionmaker
-from typer import Typer
+import typer
 
 SQLALCHEMY_DATABASE_URL = "sqlite+aiosqlite:///db.db"
 # SQLALCHEMY_DATABASE_URL = "postgresql://user:password@postgresserver/db"
@@ -35,7 +35,7 @@ async def init_models():
         await conn.run_sync(Base.metadata.create_all)
 
 
-cli = Typer()
+cli = typer.Typer()
 
 
 @cli.command()
