@@ -1,26 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d872bad4-f605-4b7f-b98b-a0a05660a6b0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/web_endpoints.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/auth/crud.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/auth/crud.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/auth/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/auth/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/auth/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/auth/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/chat/crud.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/chat/crud.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/chat/managers.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/chat/managers.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/chat/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/chat/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/chat/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/chat/routes.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/chat/schemas.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/chat/schemas.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/dependencies.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/dependencies.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/documents/crud.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/documents/crud.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/documents/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/documents/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/documents/router.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/documents/router.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/documents/schemas.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/documents/schemas.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/chat_test_case.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/chat_test_case.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.db" beforeDir="false" />
-    </list>
+    <list default="true" id="d872bad4-f605-4b7f-b98b-a0a05660a6b0" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

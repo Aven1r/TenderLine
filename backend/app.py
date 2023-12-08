@@ -5,6 +5,7 @@ from backend.api.chat.routes import router as chat_router
 from backend.api.documents.router import router as doc_router
 from .api.database import init_models
 from .web_endpoints import router as web_router
+from .api.email.routers import router as email_router
 
 
 def create_app() -> FastAPI:
@@ -21,6 +22,7 @@ def create_app() -> FastAPI:
     _app.include_router(chat_router)
     _app.include_router(auth_router)
     _app.include_router(doc_router)
+    _app.include_router(email_router)
 
     return _app
 
