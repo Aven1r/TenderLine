@@ -5,9 +5,11 @@ import jwt
 from fastapi import HTTPException
 from passlib.context import CryptContext
 
-SECRET_KEY = "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7"
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 120
+from ...config import settings
+
+SECRET_KEY = settings.secret_key
+ALGORITHM = settings.algorithm
+ACCESS_TOKEN_EXPIRE_MINUTES = settings.access_token_expire_minutes
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -26,13 +28,14 @@ def create_access_token(data: dict, expires_delta: timedelta | None = None):
 def verify_jwt_token(token: str) -> Any | None:
     credentials_exception = HTTPException(
         status_code=401,
-        detail="=Not Authorized",
+        detail="Not Authorized",
         headers={"WWW-Authenticate": "Bearer"},
     )
+    # TODO: NOT WORKING
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         return payload
-    except jwt.PyJWTError:
+    except:
         raise credentials_exception
 
 
