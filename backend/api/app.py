@@ -6,6 +6,7 @@ from .documents.router import router as doc_router
 from .email.routers import router as email_router
 import asyncio
 
+
 def create_app() -> FastAPI:
     # loop = asyncio.get_event_loop()
     # loop.run_until_complete(init_models())
@@ -28,3 +29,4 @@ app = create_app()
 @app.on_event("startup")
 async def on_startup():
     await init_models()
+    pass

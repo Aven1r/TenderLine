@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from datetime import date
+from datetime import date, datetime
 from backend.api.auth.schemas import User
 
 
@@ -20,26 +20,26 @@ class DocumentField(BaseDocumentField):
 
 
 class BaseDocument(BaseModel):
+    pass
 
-
-    field1: BaseDocumentField
-    field2: BaseDocumentField
-    field3: BaseDocumentField
-    field4: BaseDocumentField
+    # field1: BaseDocumentField
+    # field2: BaseDocumentField
+    # field3: BaseDocumentField
+    # field4: BaseDocumentField
 
 
 class DocumentCreate(BaseDocument):
-    customer_id: int
+    previous_document_id: int | None
     supplier_id: int
+    consumer_id: int
 
 
 class Document(BaseDocument):
     id: int
-    customer: User
-    supplier: User
-    conclusion_at: date
-
-    field1: DocumentField
-    field2: DocumentField
-    field3: DocumentField
-    field4: DocumentField
+    supplier_id: int
+    consumer_id: int
+    created_at: datetime
+    # field1: DocumentField
+    # field2: DocumentField
+    # field3: DocumentField
+    # field4: DocumentField

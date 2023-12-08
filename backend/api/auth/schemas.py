@@ -26,3 +26,5 @@ class CreateUser(BaseUser):
 class User(BaseUser):
     id: int
     use_email_notification: bool = True
+
+

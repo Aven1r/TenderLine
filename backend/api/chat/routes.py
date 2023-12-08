@@ -4,6 +4,7 @@ from .managers import ConnectionManager, UserConnection
 from .schemas import MessageCreate, ChatCreate, Message, Chat
 from . import crud
 from ..auth.schemas import User
+from ..documents.schemas import DocumentCreate
 from ..dependencies import get_db, get_user
 
 router = APIRouter(
@@ -39,9 +40,8 @@ async def get_message(chat_id: int, message_id: int,  db=Depends(get_db)):
 
 
 @router.post('/{chat_id}/messages/create', response_model=Message, dependencies=[Depends(get_user)])
-async def create_message(chat_id: int, message: MessageCreate, db=Depends(get_db)):
+async def create_message(chat_id: int, message: MessageCreate,  db=Depends(get_db)):
     return await crud.create_message(db, message, chat_id)
-
 
 manager = ConnectionManager()
 
