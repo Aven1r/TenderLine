@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='css/reset.css') }}">
+    <title>Document</title>
+</head>
+<body>
+    <header class="header block">
+        <div class="header__nav">
+            <div>
+                <a href="#" class="logo__link"><img src="{{ url_for('static', path='images/logo__img.svg') }}" alt="logo" class="logo__img"></a>
+                <ul class="header__list">
+                    <li class="header__list-item"><a href="#">Главная</a></li>
+                    <li class="header__list-item"><a class="header__link-active" href="#">Чаты</a></li>
+                    <li class="header__list-item"><a href="#">Образцы договоров</a></li>
+                </ul>
+            </div>
+            <div>
+                <form action="" id="header__find">
+                    <input placeholder="Работа, услуги, товары" id="header__input" type="text">
+                </form>
+                <img src="{{ url_for('static', path='images/icons/user__icon.svg') }}" alt=""><a href="#"></a></img>
+            </div>
+        </div>
+    </header>
+
+    <div class="main">
+        <section class="list_chats block">
+            <div class="chats__header">Сообщения</div>
+            <ul class="chats__list">
+                <li class="chats__list-item"><a href="#">Мои заказы</a></li>
+                <li class="chats__list-item active"><a href="#">В исполнении</a></li>
+            </ul>
+            <div class="list__waiting">
+                <form action="" id="chats__form">
+                    <input placeholder="Поиск по чатам" type="text" name="" id="chats__input">
+                </form>
+                <ul class="chats__users">
+                    {% for chat_user in chats %}
+                    <li class="chats__user" data-user_id="{{chat_user.id}}">
+                        <div >
+                            <div>
+                                <img src="{{ url_for('static', path='images/icons/user__chat.svg') }}" alt="" class="user__img">
+                                <div class="user__info">
+                                    <p class="user__name">{{chat_user.email}}</p>
+                                    <p class="user__mess">Здравствуйте!</p>
+                                </div>
+                            </div>
+                        </div>
+                        <img src="{{ url_for('static', path='images/order.png') }}" alt="" class="user__ordrer-img">
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            
+            <div class="list__orders" display="none"></div>
+        </section>
+        
+        <section class="chat block">
+            <div class="chats__user">
+                <div>
+                    <img src="{{ url_for('static', path='images/icons/user__chat.svg') }}" alt="" class="user__img">
+                    <div class="user__info">
+                        <p class="user__name">Иван Иванов</p>
+                        <p class="user__status">В сети</p>
+                    </div>
+                </div>
+            </div>
+            <div class="chats__messages">
+                <div class="messages"></div>
+                <form id="messages__form">
+                    <input placeholder="Введите текст" type="text" id="messages__input">
+                    <input value="" id="input__send" type="submit">
+                    <label><a href="#"><img src="{{ url_for('static', path='images/icons/ion_attach.svg') }}" alt="" class="ion__icon"></a></label>
+                </form>
+            </div>
+        </section>
+        <section class="document block">zzz</section>
+    </div>
+
+    <script src="{{ url_for('static', path='js/chat.js') }}"></script>
+</body>
+</html>

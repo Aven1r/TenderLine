@@ -2,15 +2,24 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d872bad4-f605-4b7f-b98b-a0a05660a6b0" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/backend/web_endpoints.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/app.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/api/auth/schemas.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/auth/schemas.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/api/app.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/app.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/api/auth/crud.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/auth/crud.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/api/auth/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/auth/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/api/auth/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/auth/routes.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/api/chat/crud.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/chat/crud.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/api/chat/managers.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/chat/managers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/api/chat/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/chat/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/api/chat/routes.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/chat/routes.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/api/chat/schemas.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/chat/schemas.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/api/dependencies.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/dependencies.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/api/documents/crud.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/documents/crud.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/api/documents/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/documents/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/api/documents/router.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/documents/router.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/api/documents/schemas.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/api/documents/schemas.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.db" beforeDir="false" afterPath="$PROJECT_DIR$/db.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/chat_test_case.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/chat_test_case.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.db" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,6 +30,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Python Script" />
+        <option value="HTML File" />
       </list>
     </option>
   </component>
@@ -36,17 +46,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;MTConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "settings.editor.selected.configurable": "MTConfigurable"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/backend" />
-      <recent name="$PROJECT_DIR$/backend/api" />
+      <recent name="$PROJECT_DIR$/frontend/static" />
+      <recent name="$PROJECT_DIR$/frontend" />
+      <recent name="$PROJECT_DIR$/backend/static/templates" />
+      <recent name="$PROJECT_DIR$/backend/static" />
+      <recent name="$PROJECT_DIR$/backend/api/documents" />
     </key>
   </component>
   <component name="RunManager" selected="Python tests.pytest for chat_test_case.AuthTestCase.test_chat_pong">

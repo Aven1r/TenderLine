@@ -1,8 +1,8 @@
-from unittest import TestCase, IsolatedAsyncioTestCase
+from unittest import IsolatedAsyncioTestCase
 
 from httpx import AsyncClient
 import json
-from api.app import app
+from backend.app import app
 from api.database import init_models
 
 

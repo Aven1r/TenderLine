@@ -1,7 +1,7 @@
 from sqlalchemy import Column, Integer, Boolean, String
 from sqlalchemy.orm import relationship
 
-from ..chat.models import Chat
+# from ..chat.models import Chat
 from ..database import Base
 
 

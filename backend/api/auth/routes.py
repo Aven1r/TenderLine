@@ -2,7 +2,8 @@ from fastapi import APIRouter, Depends, Form, Cookie
 from starlette.responses import JSONResponse
 from .secure import create_access_token, verify_jwt_token, verify_password, get_password_hash
 from .schemas import CreateUser, User
-from ..dependencies import get_db, get_user
+from ..dependencies import get_db
+from ..dependencies import get_user as get_current_user
 from . import crud
 
 router = APIRouter(
@@ -47,6 +48,11 @@ async def get_user(user_id, db=Depends(get_db)):
     return await crud.get_user_by_id(db, user_id)
 
 
+@router.get('/users', response_model=list[User])
+async def get_users(user=Depends(get_current_user), db=Depends(get_db)):
+    return await crud.get_all_users(db, user.id)
+
+
 @router.get('/test')
-async def test(user=Depends(get_user)):
-    return user
+async def test(current_user:User=Depends(get_current_user)):
+    return current_user

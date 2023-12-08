@@ -12,6 +12,14 @@ async def create_user(session: AsyncSession, user: schemas.CreateUser) -> User:
     return db_user
 
 
+async def get_all_users(session: AsyncSession, exclude_user_id: int | None = None) -> list[User]:
+    query = select(User)
+    if exclude_user_id is not None:
+        query = query.where(User.id != exclude_user_id)
+    rez = await session.execute(query)
+    return rez.unique().scalars()
+
+
 async def get_user_by_id(session: AsyncSession, _id: int) -> User:
     rez = await session.execute(select(User).where(User.id == _id))
     return rez.scalar()
