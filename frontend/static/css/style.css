@@ -1,13 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap');
 body {
     font-family: 'Montserrat', sans-serif;
-    padding: 24px;
-    margin: 0 auto;
     font-size: 16px;
     font-weight: 500;
     background-color: var(--back);
     color: var(--black);
-    max-width: 75rem;
+    max-width: 100rem;
+    position: relative;
+}
+
+.hidden{
+    opacity: 0;
+    display: none;
+    max-width: 0;
+    max-height: 0;
+
 }
 
 :root {
@@ -28,6 +35,7 @@ body {
 
  /*---Header----*/
 .header {
+    margin: 24px 24px 0 24px;
     padding: 15px 24px;
     max-width: 100em;
     margin-bottom: 1.75em;
@@ -69,10 +77,20 @@ body {
 #header__input{
     min-width: 20em;
     min-height: 3.5em;
-    padding: 1.1em 1.4em;
+    padding: 0.11em;
+    padding-left: 28px;
     border-radius: 30px;
     background: #ECECEC !important;
     color: #000;
+}
+
+/**/
+#header__input::placeholder, #chats__input::placeholder{
+    background-image: url(/images/icons/finder.svg);
+    background-size: contain;
+    background-repeat:no-repeat;
+    padding-left: 28px;
+    font-size: 0.875em;
 }
 
 #header__input::placeholder{
@@ -81,15 +99,16 @@ body {
 
 /*---List of chats----*/
 .main {
+    margin: 24px;
     max-width: 100rem;
     display: flex;
     justify-content: space-between;
     column-gap: 2rem;
+    height: 77vh;
 }
 
 .list_chats {
-    width: 22em;
-    min-height: 77vh;
+    width: 24em;
 }
 
 .chats__header {
@@ -165,6 +184,7 @@ body {
 
 .chats__user {
     display: flex;
+    column-gap: 12px;
     justify-content: space-between;
     padding: 0.8em;
     border-bottom: 1px solid var(--back);
@@ -214,7 +234,7 @@ body {
 
 /*---Main chat-*/
 .chat {
-    width: 35em;
+    width: 64em;
     position: relative;
 }
 
@@ -224,14 +244,38 @@ body {
     padding: 1.3em;
 }
 
-.document {
-    width: 26em;
+/*-Add-*/
+.messages{
+    padding-right: 22px;
+    max-height: 84%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
+
+.messages::-webkit-scrollbar {
+    width: 10px;
+    background-color: #f9f9fd;
+    opacity: .5;
+  }
+  
+  .messages::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: #cecece;
+  }
+  
+  .messages::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    background-color: #f9f9fd;
+  }
 
 #messages__form{
     position: absolute;
     bottom: 21px;
-    width: 91%;
+    width: 95%;
     display: flex;
     column-gap: 1em;
     align-items: center;
@@ -240,7 +284,7 @@ body {
 #messages__input{
     width: 100%;
     min-height: 3.5em;
-    padding: 1.1em 1.4em;
+    padding: 1.1em 1.4em 1.1em 3.3em;
     border-radius: 30px;
     background: #ECECEC !important;
     color: #000;
@@ -252,5 +296,102 @@ body {
     width: 21px;
     height: 21px;
     position: absolute;
-    right: 66px;
+    right: 20px;
+}
+
+label{
+    position: absolute;
+    left: 10px;
+    transform: rotate(35deg);
+}
+
+/*----*/
+.message__to, .message__from{
+    border-radius: 0.9375rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    padding: 0.875rem 0.625rem;
+    margin-bottom: 12px;
+    max-width: 332px;
+    word-wrap: break-word;
+}
+
+.message__to{
+    background-color: rgba(217, 217, 217, 0.5);
+    margin-right: 0;
+    margin-left: auto;
+}
+
+.message__from{
+    border: 1px solid black;
+}
+
+/*--Main form--*/
+.modal__wrapper{
+    width: 100vw;
+    position:absolute;
+    top: -24px;
+    bottom: 0;
+    display:flex;
+    width:100%;
+    height:100vh;
+    justify-content:center;
+    align-items:center;
+    background:rgba(0,0,0,.7);
+    z-index:100;
+}
+
+.modal__window {
+    max-width: 35.7em;
+    min-height: 30em;
+    background-color: #fff;
+    border-radius: 0.9375rem;
+    display: flex;
+    flex-direction: column;
+    z-index: 2;
+    padding: 1.35em 1.06em;
+}
+
+.main-form__header {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1.5rem;
+    line-height: 1.67144rem;
+}
+
+.main-form__title {
+}
+
+.close {
+    margin-left: 5em;
+}
+
+#main-form__form {
+    margin-top: 33px;
+    position: relative;
+}
+
+#main-form__form div{
+    padding-right: 30px;
+    height: 30em;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+}
+
+#main-form__form input{
+    max-width: 100%;
+    padding: 0.75em 1.12em;
+    background-color: #E7E7E7;
+    border-radius: .44em;
+}
+
+#submit__btn{
+    margin-top: 1.62em;
+    font-size: 1.25em;
+    background-color: black !important;
+    color: #fff;
+    border-radius: 30px !important;
+    padding: 0.44em;
 }

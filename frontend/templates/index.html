@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', path='css/reset.css') }}">
-    <title>Document</title>
+    <title>ggygygyyyg</title>
 </head>
 <body>
     <header class="header block">
@@ -15,7 +15,7 @@
                 <ul class="header__list">
                     <li class="header__list-item"><a href="#">Главная</a></li>
                     <li class="header__list-item"><a class="header__link-active" href="#">Чаты</a></li>
-                    <li class="header__list-item"><a href="#">Образцы договоров</a></li>
+                    <li class="header__list-item"><a href="#"> договоров</a></li>
                 </ul>
             </div>
             <div>
@@ -64,8 +64,8 @@
                 <div>
                     <img src="{{ url_for('static', path='images/icons/user__chat.svg') }}" alt="" class="user__img">
                     <div class="user__info">
-                        <p class="user__name">Иван Иванов</p>
-                        <p class="user__status">В сети</p>
+                        <p class="user__name">Выберите чат, чтобы начать общение</p>
+                        <p class="user__status"></p>
                     </div>
                 </div>
             </div>
@@ -78,8 +78,36 @@
                 </form>
             </div>
         </section>
-        <section class="document block">zzz</section>
     </div>
+
+    <section class="modal__wrapper hidden">
+        <div class="modal__window">
+            <div class="main-form__header">
+                <h1 class="main-form__title">Внести изменения</h1>
+                <button class="close"><img class="close-img" src="{{ url_for('static', path='images/icons/close__form.svg') }}" alt=""></button>
+            </div>
+            <form id="main-form__form">
+                <div>
+                    <input placeholder="Статус" type="text" name="status" id="main-form__status">
+                    <input placeholder="Реестровый номер" type="text" name="registry-num" id="main-form__registry-num">
+                    <input placeholder="Осуществленная закупка" type="text" name="purchase" id="main-form__purchase">
+                    <input placeholder="Закон" type="text" name="law" id="main-form__law">
+                    <input placeholder="Способ осуществления закупки" type="text" name="way-purchase" id="main-form__way-purchase">
+                    <input placeholder="Номер" type="text" name="number" id="main-form__number">
+                    <input placeholder="Период действия" type="text" name="period" id="main-form__period">
+                    <input placeholder="Предмет контракта" type="text" name="itemOfContract" id="main-form__itemOfContract">
+                    <input placeholder="Место заключения" type="text" name="place" id="main-form__place">
+                    <input placeholder="ИКЗ" type="text" name="ikz" id="main-form__ikz">
+                    <input placeholder="Источник финансирования" type="text" name="source" id="main-form__source">
+                    <input placeholder="Сумма" type="text" name="summ" id="main-form__summ">
+                    <input placeholder="Сумма" type="text" name="summ" id="main-form__summ">
+                    <input placeholder="Сумма" type="text" name="summ" id="main-form__summ">
+                </div>
+                <input value="отправить" type="submit" name="submit" id="submit__btn">
+            </form>
+        </div>
+        <div class="dark__back"></div>
+    </section>
 
     <script src="{{ url_for('static', path='js/chat.js') }}"></script>
 </body>
