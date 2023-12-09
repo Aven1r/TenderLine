@@ -77,7 +77,7 @@ async def websocket_chat_endpoint(websocket: WebSocket, recipient_id: int, user=
             data = await websocket.receive_json()
             print(data)
             message = await crud.create_message(db, user.id, MessageCreate(**data, recipient_id=recipient_id))
-
+            print(message)
             await manager.send_message(recipient_id, message)
             # await manager.broadcast(f"Client #{client_id} says: {data}")
     except WebSocketDisconnect:
