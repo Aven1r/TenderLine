@@ -5,6 +5,8 @@ from .managers import ConnectionManager, UserConnection
 from .schemas import MessageCreate, Message
 from . import crud
 from ..dependencies import get_db, get_user
+from ..email.routers import email_notify
+from ..auth.crud import get_user_by_id
 
 
 router = APIRouter(
@@ -39,6 +41,13 @@ async def websocket_chat_endpoint(websocket: WebSocket, recipient_id: int, user=
             message = await crud.create_message(db, user.id, MessageCreate(**data, recipient_id=recipient_id))
 
             accepted_by_socket = await manager.send_message(recipient_id, message)
+            print(accepted_by_socket)
+            
+            if not accepted_by_socket:
+                pass
+                # resipient_user = await get_user_by_id(db, recipient_id)
+                # email_notify(resipient_user, 123)
+            
     except WebSocketDisconnect:
         manager.disconnect(user_connection)
 

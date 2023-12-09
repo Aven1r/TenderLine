@@ -16,22 +16,23 @@ document.querySelectorAll('.chats__user').forEach(user => {
         messages.innerHTML = '';
         fetch(`http://192.168.8.130:8000/chats/messages?recipient_id=${e.target.getAttribute('data-user_id')}&limit=10&skip=0`)
         .then(response => response.json())
-        .then(data => console.log(data.forEach(userMess => {
-
-        }
-            let div = document.createElement('div');
-            if (userMess.author_id == e.target.getAttribute('data-user_id')){
-                div.innerHTML = userMess.text;
-                div.className = 'message__from';
-                messages.appendChild(div);
-            } else{
-                div.innerHTML = userMess.text;
-                div.className = 'message__to';
-                messages.appendChild(div);
-            }
-        })))
+        .then(data => console.log(data.length))
+//        .then(data => console.log(data.forEach(userMess => {
+//
+//
+//            let div = document.createElement('div');
+//            if (userMess.author_id == e.target.getAttribute('data-user_id')){
+//                div.innerHTML = userMess.text;
+//                div.className = 'message__from';
+//                messages.appendChild(div);
+//            } else{
+//                div.innerHTML = userMess.text;
+//                div.className = 'message__to';
+//                messages.appendChild(div);
+//            }
+//        })))
         userIdNow = e.target.getAttribute('data-user_id');
-        console.log(e.target.getAttribute('data-user_id'));
+//        console.log(e.target.getAttribute('data-user_id'));
 
         if (socket !== undefined){
             socket.close();
@@ -41,7 +42,7 @@ document.querySelectorAll('.chats__user').forEach(user => {
         socket.onmessage = (message) => {
             // alert(message);
             let data = JSON.parse(JSON.parse(message.data));
-            console.log(data);
+//            console.log(data);
             let div = document.createElement('div');
             div.innerHTML = data.text;
             div.className = 'message__from';

@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, status
 from fastapi.staticfiles import StaticFiles
 from .schemas import Document, DocumentCreate
 from ..dependencies import get_db
@@ -16,15 +16,12 @@ router = APIRouter(
 async def create_document(document: DocumentCreate, db=Depends(get_db)):
     return await crud.create_document(db, document)
 
-# router.mount('/static', StaticFiles(directory='backend/api/documents/static'), name='static')
-#
-#
-# @router.post('/create', response_model=Document)
-# async def create_document(document: DocumentCreate, db = Depends(get_db)):
-#     return await crud.create_document(db, document)
-#
-#
-# @router.get('/history', response_model=list[Document])
-# async def get_document_history(chat_id: int, db = Depends(get_db)):
-#     chat = await get_chat(db, chat_id)
-#     return await crud.get_document_history(db, chat.consumer_id, chat.vendor_id)
+
+@router.post('/getdiff', status_code=status.HTTP_200_OK)
+async def get_gifference(document: Document, document2: Document):
+    return await crud.get_difference(document, document2)
+
+
+@router.post('/generatepdf', status_code=status.HTTP_200_OK)
+async def generate_pdf(document: Document, db = Depends(get_db)):
+    return await crud.generate_pdf(document)
