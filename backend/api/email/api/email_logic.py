@@ -1,4 +1,5 @@
 import base64
+import os
 
 from email.mime.text import MIMEText
 from googleapiclient.discovery import build
@@ -6,6 +7,9 @@ from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
+from email.mime.multipart import MIMEMultipart
+from email.mime.base import MIMEBase
+from email import encoders
 
 
 
@@ -21,15 +25,24 @@ def send_pdf(email_info, attachment):
   # Build the Gmail service
   creds = Credentials.from_authorized_user_info(TOKEN_DATA)
   service = build('gmail', 'v1', credentials=creds)
+  attachment = os.path.abspath('backend/api/documents/generated/contract.pdf')
 
   # Refresh the token if it's expired
   if creds.expired:
         creds.refresh(Request())
 
   # Create the email message
-  email = MIMEText(email_info['message'])
-  email['to'] = email_info['to']
-  email['subject'] = email_info['subject']
+  email = MIMEMultipart()
+  email['to'] = email_info
+  email['subject'] = 'TenderLine: файл контракта по закупке Елочных украшений'
+  email.attach(MIMEText('Готовый файл договора во вложении'))
+
+  # Add the attachment
+  part = MIMEBase('application', 'octet-stream')
+  part.set_payload(open(attachment, 'rb').read())
+  encoders.encode_base64(part)
+  part.add_header('Content-Disposition', 'attachment', filename=os.path.basename(attachment))
+  email.attach(part)
 
   # Send the email
   raw_message = {'raw': base64.urlsafe_b64encode(email.as_bytes()).decode('utf-8')}
