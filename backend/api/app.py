@@ -34,3 +34,4 @@ app = create_app()
 async def on_startup():
     # await init_models()
     pass
+

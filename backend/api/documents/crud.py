@@ -4,7 +4,7 @@ from . import schemas
 from .models import Document
 
 
-async def create_document(session: AsyncSession, document: schemas.Document) -> Document:
+async def create_document(session: AsyncSession, document: schemas.DocumentCreate) -> Document:
     document_db = Document(**document.model_dump())
     session.add(document_db)
     await session.commit()

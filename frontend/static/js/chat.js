@@ -14,7 +14,7 @@ document.querySelectorAll('.chats__user').forEach(user => {
     user.addEventListener('click', (e) => {
         e.preventDefault();
         messages.innerHTML = '';
-        fetch(`http://192.168.0.131:8000/chats/messages?recipient_id=${e.target.getAttribute('data-user_id')}&limit=10&skip=0`)
+        fetch(`http://192.168.8.130:8000/chats/messages?recipient_id=${e.target.getAttribute('data-user_id')}&limit=10&skip=0`)
         .then(response => response.json())
         .then(data => console.log(data.forEach(userMess => {
 
@@ -37,7 +37,7 @@ document.querySelectorAll('.chats__user').forEach(user => {
             socket.close();
         }
 
-        socket = new WebSocket(`ws://192.168.0.131:8000/chats/ws/${e.target.getAttribute('data-user_id')}`);
+        socket = new WebSocket(`ws://192.168.8.130:8000/chats/ws/${e.target.getAttribute('data-user_id')}`);
         socket.onmessage = (message) => {
             // alert(message);
             let data = JSON.parse(JSON.parse(message.data));

@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends
 from fastapi.staticfiles import StaticFiles
-from .schemas import Document
+from .schemas import Document, DocumentCreate
 from ..dependencies import get_db
 from . import crud
 
@@ -13,7 +13,7 @@ router = APIRouter(
 
 
 @router.post('/create', response_model=Document)
-async def create_document(document: Document, db=Depends(get_db)):
+async def create_document(document: DocumentCreate, db=Depends(get_db)):
     return await crud.create_document(db, document)
 
 # router.mount('/static', StaticFiles(directory='backend/api/documents/static'), name='static')

@@ -10,9 +10,16 @@ class BudgetSource(str, Enum):
     OMS = 'Средства ОМС'
 
 
-class Document(BaseModel):
+class DocumentStatus(str, Enum):
+    CONFIRMED = 'Подтверждено'
+    EDITED = 'Отредактировано'
+    REJECTED = 'Отклонено'
+    CREATED = 'Создано'
+    
+
+class BaseDocument(BaseModel):
     status: str
-    reestr_number: str 
+    reestr_number: str
     purchase_number: str
     law_number: str
     contract_method: str
@@ -25,6 +32,20 @@ class Document(BaseModel):
     budget: BudgetSource
     contract_price: int
     prepayment: int
+    
+    previous_document_id: int | None = None
+    document_status: DocumentStatus = DocumentStatus.CREATED
+    
+    class Config:
+        use_enum_values = True
+
+
+class DocumentCreate(BaseDocument):
+    pass
+
+
+class Document(BaseDocument):
+    id: int
     
     class Config:
         use_enum_values = True
