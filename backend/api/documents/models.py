@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Boolean
-# from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship
 from ..database import Base
 # from datetime import datetime
 #
@@ -42,5 +42,6 @@ class Document(Base):
     prepayment = Column(String)
     
     message_id = Column(Integer, ForeignKey('message.id'), nullable=True)
+    # message = relationship("Message", backref="document", foreign_keys=message_id)
 
 

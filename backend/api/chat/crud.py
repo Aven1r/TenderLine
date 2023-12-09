@@ -5,7 +5,7 @@ from sqlalchemy.sql.operators import or_
 
 from . import schemas
 from .models import Message
-# from ..documents.models import Document
+from ..documents.models import Document
 
 
 # async def get_messages(session: AsyncSession, chat_id: int, user_id: int = None, limit: int = 10, skip: int = 0) -> list[Message]:
@@ -15,7 +15,8 @@ from .models import Message
 #     rez = await session.execute(query.order_by(Message.created_at).offset(skip).limit(limit))
 #     return rez.scalars()
 async def create_message(session: AsyncSession, author_id: int, message: schemas.MessageCreate) -> Message:
-    message_db = Message(**message.model_dump(), author_id=author_id)
+    message.document = Document(**message.document.model_dump()) if message.document else None
+    message_db = Message(**dict(message), author_id=author_id)
     session.add(message_db)
     await session.commit()
     await session.refresh(message_db)

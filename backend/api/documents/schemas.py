@@ -26,7 +26,5 @@ class Document(BaseModel):
     contract_price: int
     prepayment: int
     
-    message_id: int | None = None
-    
     class Config:
         use_enum_values = True

@@ -1,5 +1,6 @@
 const form = document.getElementById('messages__form');
-let socket
+let socket;
+current_id = fets
 
 document.querySelectorAll('.chats__user').forEach(user => {
     user.addEventListener('click', (e) => {
@@ -16,7 +17,10 @@ document.querySelectorAll('.chats__user').forEach(user => {
 
         socket = new WebSocket(`ws://192.168.8.130:8000/chats/ws/${e.target.getAttribute('data-user_id')}`);
         socket.onmessage = (message) => {
-            alert(message);
+            console.log(message.data)
+            let data = JSON.parse(JSON.parse(message.data));
+            console.log(data);
+            console.log(data.text);
         }
 
 
@@ -30,6 +34,7 @@ document.querySelectorAll('.chats__user').forEach(user => {
      }
 
      form.addEventListener('submit', send);
+
 
 
     })

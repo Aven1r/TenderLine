@@ -14,5 +14,5 @@ templates = Jinja2Templates(directory="frontend/templates")
 @router.get('/chat')
 async def view_chat(request: Request, user=Depends(get_user), db=Depends(get_db)):
     chats = await get_all_users(db, user.id)
-    return templates.TemplateResponse("index.html", {'request': request, 'user_id': user.id, 'chats': chats})
+    return templates.TemplateResponse("index.html", {'request': request, 'user_id': user.id, 'chats': chats, 'user': user})
 
