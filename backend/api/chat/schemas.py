@@ -7,7 +7,7 @@ from ..documents.schemas import Document
 class BaseMessage(BaseModel):
     # document: Document
     text: str | None = None
-    document: Document | None 
+    document: Document | None = None
 
 
 class MessageCreate(BaseMessage):

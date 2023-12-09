@@ -10,8 +10,8 @@
 <body>
     
     <section class="signIn">
-        <img src="/images/icons/white__logo.svg" alt="logo" class="logo">
-        <form action="" id="form__signIn" method="post">
+        <img src="{{ url_for('static', path='images/icons/white__logo.svg') }}" alt="logo" class="logo">
+        <form action="/auth/register" id="form__signIn" method="post">
             <input placeholder="Почта" type="email" name="" id="email">
             <input placeholder="Пароль" type="password" name="" id="password">
             <div class="block__under-form">
@@ -25,8 +25,8 @@
         </form>
         <div class="line__signIn-with">или войти через</div>
         <div class="btns">
-            <a href="#" class="gosuslugi"><img src="./images/icons/gosuslugi.svg" alt=""></a>
-            <a href="#" class="ezp"><img src="./images/icons/ezp.svg" alt=""></a>
+            <a href="#" class="gosuslugi"><img src="{{url_for('static', path='images/icons/gosuslugi.svg')}}" alt=""></a>
+            <a href="#" class="ezp"><img src="{{url_for('static', path='images/icons/ezp.svg')}}" alt=""></a>
         </div>
         <p class="btn__logIn-p">Уже есть аккаунт? <a class="btn__logIn" href="#">Войти</a></p>
     </section>
