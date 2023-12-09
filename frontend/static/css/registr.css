@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap');
+body {
+    font-family: 'Montserrat', sans-serif;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    max-width: 100vw;
+    background-color: black;
+    max-height: 100vh;
+}
+
+a{
+    color:inherit;
+    font-size: inherit;
+    font-weight: inherit;
+}
+
+.signIn {
+    margin: 105px auto;
+    max-width: 33em;
+    max-height: 540px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.logo {
+    margin: 0 auto;
+    margin-bottom: 4em;
+    width: 44px;
+    height: 44px;
+}
+
+#form__signIn {
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+#email{
+    margin-bottom: 1.12em;
+}
+
+#email, #password{
+    max-width: 100%;
+    background-color: #232323;
+    padding: 0.5rem 0.9375rem;
+    border-radius: 0.5em;
+}
+
+.block__under-form {
+    margin-top: 1.5em;
+    margin-bottom: 4em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.checkbox {
+    font-weight: 300;
+}
+
+#checkbox__input{
+    cursor: pointer;
+}
+
+.checkbox__label {
+    margin-left: 0.88em;
+}
+
+#input__send{
+    background-color: #fff;
+    border-radius: 0.5em;
+    padding: 0.5rem 0.9375rem;
+    color: black;
+    font-weight: 500;
+    font-size: 1.125em;
+}
+
+
+.line__signIn-with {
+    max-width: fit-content;
+    margin: 3em auto 0;
+    position: relative;
+    font-size: .9em;
+}
+
+.line__signIn-with::after{
+    content: '';
+    display: inline-block;
+    position: absolute;
+    width: 9rem;
+    height: 1px;
+    background-color: #fff;
+    opacity: .25;
+    left: -9.5rem;
+    top: 10px;
+}
+
+.line__signIn-with::before{
+    content: '';
+    display: inline-block;
+    position: absolute;
+    width: 9rem;
+    height: 1px;
+    background-color: #fff;
+    opacity: .25;
+    right: -9.5rem;
+    top: 10px;
+}
+
+.btns {
+    margin-top: 1.12em;
+    display: flex;
+    align-items:center;
+    justify-content: space-between;
+}
+
+.btns a{
+    background: #000;
+    background-color: #232323;
+    border-radius: .5em;
+    column-gap: 37px;
+}
+
+.gosuslugi {
+    padding: 10px 68px;
+}
+
+.ezp {
+    padding: 2px 68px;
+}
+
+.btn__logIn-p {
+    margin-top: 25px;
+    font-weight: 400;
+    color: #C7C7C7;
+}
+
+.btn__logIn{
+    font-weight: 600;
+}
