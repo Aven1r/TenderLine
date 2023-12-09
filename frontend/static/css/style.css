@@ -9,14 +9,6 @@ body {
     position: relative;
 }
 
-.hidden{
-    opacity: 0;
-    display: none;
-    max-width: 0;
-    max-height: 0;
-
-}
-
 :root {
     --white: #fff;
     --back: #D1D2D4;
@@ -215,6 +207,16 @@ body {
 
 .user__img{
     position: relative;
+    width: 52px;
+    height: 52px;
+    margin-right: 12px;
+}
+
+.user__img-chat{
+    position: relative;
+    width: 30px;
+    height: 30px;
+    margin-right: 12px;
 }
 
 /* .user__img::after{
@@ -245,14 +247,24 @@ body {
 }
 
 /*-Add-*/
-.messages{
+.scroll{
     padding-right: 22px;
-    max-height: 84%;
+    max-height: 88%;
     display: flex;
     flex-direction: column;
     position: relative;
     overflow-x: hidden;
-    overflow-y: auto;
+    overflow-y: scroll;
+}
+
+.scroll::-webkit-scrollbar{
+    width: 0;
+}
+
+.messages{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
 }
 
 .messages::-webkit-scrollbar {
@@ -288,6 +300,12 @@ body {
     border-radius: 30px;
     background: #ECECEC !important;
     color: #000;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
 }
 
 #input__send{
@@ -394,4 +412,33 @@ label{
     color: #fff;
     border-radius: 30px !important;
     padding: 0.44em;
+}
+
+.message__doc{
+    margin: 5em auto 0;
+    max-width: 22.3em;
+    padding: 1.625rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2.5rem;
+    border: 1px solid black;
+    border-radius: .88em;
+}
+
+.message__doc button {
+    background-color: black;
+    border-radius: 1.25rem;
+    padding: 0.4375rem 0.75rem;
+    gap: 0.625rem;
+    color: #fff;
+}
+
+
+/*-----------------------------------------*/
+.hidden{
+    opacity: 0;
+    display: none;
+    max-width: 0;
+    max-height: 0;
 }

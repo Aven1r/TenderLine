@@ -39,7 +39,7 @@ async def websocket_chat_endpoint(websocket: WebSocket, recipient_id: int, user=
             data = await websocket.receive_json()
             print(data)
             message = await crud.create_message(db, user.id, MessageCreate(**data, recipient_id=recipient_id))
-
+            await manager.send_message(user.id, message)
             accepted_by_socket = await manager.send_message(recipient_id, message)
             print(accepted_by_socket)
             
@@ -47,7 +47,7 @@ async def websocket_chat_endpoint(websocket: WebSocket, recipient_id: int, user=
                 pass
                 # resipient_user = await get_user_by_id(db, recipient_id)
                 # email_notify(resipient_user, 123)
-            
+
     except WebSocketDisconnect:
         manager.disconnect(user_connection)
 
