@@ -1,14 +1,20 @@
 from fastapi import APIRouter, Depends
 from fastapi.staticfiles import StaticFiles
-# from .schemas import DocumentCreate, Document
+from .schemas import Document
 from ..dependencies import get_db
 from . import crud
+
 # from ..chat.crud import get_chat
 
 router = APIRouter(
     prefix='/documents',
     tags=['Documents']
 )
+
+
+@router.post('/create', response_model=Document)
+async def create_document(document: Document, db=Depends(get_db)):
+    return await crud.create_document(db, document)
 
 # router.mount('/static', StaticFiles(directory='backend/api/documents/static'), name='static')
 #

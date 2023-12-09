@@ -3,14 +3,16 @@ from datetime import date, datetime
 from backend.api.auth.schemas import User
 from enum import Enum
 
+
 class BudgetSource(str, Enum):
     BUDGET = 'Бюджетные средства'
     NOT_BUDGET = 'Небюджетные средства'
     OMS = 'Средства ОМС'
 
+
 class Document(BaseModel):
     status: str
-    reestr_number: str
+    reestr_number: str 
     purchase_number: str
     law_number: str
     contract_method: str
@@ -23,3 +25,8 @@ class Document(BaseModel):
     budget: BudgetSource
     contract_price: int
     prepayment: int
+    
+    message_id: int | None = None
+    
+    class Config:
+        use_enum_values = True
