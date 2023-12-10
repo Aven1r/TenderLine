@@ -6,6 +6,30 @@ const inputList = document.getElementById('main-form__form');
 let socket;
 let recipientId;
 
+function collect_message_json(message_status){
+    return {
+        "text": "Какой-то договор",
+        "document": {
+          "status": document.getElementById('main-form__status').value,
+          "reestr_number": document.getElementById('main-form__reestr_number').value,
+          "purchase_number": document.getElementById('main-form__purchase_number').value,
+          "law_number": document.getElementById('main-form__law_number').value,
+          "contract_method": document.getElementById('main-form__contract_method').value,
+          "contract_basis": document.getElementById('main-form__contract_basis').value,
+          "contract_number": document.getElementById('main-form__contract_number').value,
+          "contract_lifetime": document.getElementById('main-form__contract_lifetime').value,
+          "contract_subject": document.getElementById('main-form__contract_subject').value,
+          "contract_place": document.getElementById('main-form__contract_place').value,
+          "IKZ": document.getElementById('main-form__IKZ').value,
+          "budget": "Бюджетные средства",
+          "contract_price": document.getElementById('main-form__сontract_price').value,
+          "prepayment": document.getElementById('main-form__prepayment').value,
+          "previous_document_id": null,
+          "document_status": message_status
+        }
+    };
+}
+
 
 function createElement(data, path){
     let div = document.createElement('div');
@@ -30,9 +54,12 @@ function createElement(data, path){
                         fetch(`http://192.168.8.129:8000/chats/message/${data.id}`)
                         .then(response => response.json())
                         .then(data => {
+                            console.log(data)
                             for (key in data['document']){
+                                
                                 console.log( document.getElementById(`main-form__${key}`));
-                                // document.getElementById(`main-form__${key}`).value == data[key];
+                                
+                                document.getElementById(`main-form__${key}`).value = data['document'][key];
                             }
                             // startForm.classList.remove('hidden');
                         })
@@ -131,30 +158,10 @@ document.querySelectorAll('.chats__user').forEach(user => {
                     //----Close form-------
                     document.getElementById('main-form__form').addEventListener('submit', (e) => {
                         e.preventDefault();
-                        const form = {
-                            "text": "Какой-то договор",
-                            "document": {
-                              "status": document.getElementById('main-form__status').value,
-                              "reestr_number": document.getElementById('main-form__reestr_number').value,
-                              "purchase_number": document.getElementById('main-form__purchase_number').value,
-                              "law_number": document.getElementById('main-form__law_number').value,
-                              "contract_method": document.getElementById('main-form__contract_method').value,
-                              "contract_basis": document.getElementById('main-form__contract_basis').value,
-                              "contract_number": document.getElementById('main-form__contract_number').value,
-                              "contract_lifetime": document.getElementById('main-form__contract_lifetime').value,
-                              "contract_subject": document.getElementById('main-form__contract_subject').value,
-                              "contract_place": document.getElementById('main-form__contract_place').value,
-                              "IKZ": document.getElementById('main-form__IKZ').value,
-                              "budget": "Бюджетные средства",
-                              "contract_price": document.getElementById('main-form__сontract_price').value,
-                              "prepayment": document.getElementById('main-form__prepayment').value,
-                              "previous_document_id": null,
-                              "document_status": "Создано"
-                            }
-                        };
+                        
 
                         // console.log(form);
-                        socket.send(JSON.stringify(form));
+                        socket.send(JSON.stringify(collect_message_json("Создано")));
 
                         startForm.classList.add('hidden');
                         inputList.querySelectorAll('input').forEach(item => item.value = '')
