@@ -1,16 +1,88 @@
 const form = document.getElementById('messages__form');
 const messages = document.querySelector('.messages');
 const startForm = document.querySelector('.modal__wrapper');
+const inputList = document.getElementById('main-form__form');
 // let userIdNow = 0;
 let socket;
 let recipientId;
 
 
-function createElement(text, path){
+function createElement(data, path){
     let div = document.createElement('div');
-    div.innerHTML = text;
-    div.className = `message__${path}`;
-    messages.appendChild(div);
+    if (data.document == null){
+        // создание текстового сообщения без документа
+        div.innerHTML = data.text;
+        div.className = `message__${path}`;
+        messages.appendChild(div);
+    } else {
+        switch (data.document.document_status){
+            case 'Создано':
+
+                div.innerHTML = '<p>Договор №52</p><img src="images/icons/file.svg"></img>';
+                div.className = 'message__to';
+                div.classList.add('open-file');
+                div.setAttribute('data-message_id', data.id)
+                messages.appendChild(div);
+
+                document.querySelector('.open-file').addEventListener('click', () => {
+                    startForm.classList.remove('hidden');
+                    function a(){
+                        fetch(`http://192.168.8.129:8000/chats/message/${data.id}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            for (key in data['document']){
+                                console.log( document.getElementById(`main-form__${key}`));
+                                // document.getElementById(`main-form__${key}`).value == data[key];
+                            }
+                            // startForm.classList.remove('hidden');
+                        })
+                    }
+                    a();
+                })
+                
+                return
+
+            // case 'Отредактировано':
+            //     let str = `
+            //     <div>
+            //         <h1>Договор №52</h1>
+            //         <img src="{{ url_for('static', path='images/icons/download.svg') }}"></img>
+            //     </div>;
+            //     <p>Сводка изменений:</p>
+            //     <div>
+            //         <table>
+            //             <tr>
+            //                 <td>значение</td>
+            //                 <td>старое</td>
+            //             </tr>
+            //             <tr>
+            //                 <td>значение</td>
+            //                 <td>старое</td>
+            //             </tr>
+            //             <tr>
+            //                 <td>значение</td>
+            //                 <td>старое</td>
+            //             </tr>
+            //         </table>
+            //         <img src="{{ url_for('static', path='images/icons/change.svg') }}"></img>
+            //         <form id="changes__shortForm">
+            //             <div><label for="">новое</label><input type="checkbox" name="" id=""></div>
+            //             <div><label for="">новое</label><input type="checkbox" name="" id=""></div>
+            //             <div><label for="">новое</label><input type="checkbox" name="" id=""></div>
+            //             <br />
+            //             <input type="submit" value="редактировать">
+            //         </form>
+            //     </div>`;
+            //     div.insertAdjacentHTML('beforeend', str);
+            //     div.className = 'message__from';
+            //     messages.appendChild(div);
+            //     return
+            // case 'Подтверждено':
+            //     alert('3');
+            //     return
+        }
+    }
+    
 }
 
 //----send message
@@ -27,12 +99,11 @@ document.querySelectorAll('.chats__user').forEach(user => {
 
         e.preventDefault();
         messages.innerHTML = '';
-        fetch(`http://192.168.8.130:8000/chats/messages?recipient_id=${e.target.getAttribute('data-user_id')}&limit=10&skip=0`)
+        fetch(`http://192.168.8.129:8000/chats/messages?recipient_id=${e.target.getAttribute('data-user_id')}&limit=10&skip=0`)
         .then(response => response.json())
         .then(data => {
-            console.log(data);
             //----check length of messages
-            if (data.length != 0){
+            if (data.length == 0){
                 data.forEach(userMess => {
                     console.log(userMess);
                     let div = document.createElement('div');
@@ -64,9 +135,9 @@ document.querySelectorAll('.chats__user').forEach(user => {
                             "text": "Какой-то договор",
                             "document": {
                               "status": document.getElementById('main-form__status').value,
-                              "reestr_number": document.getElementById('main-form__registry-num').value,
-                              "purchase_number": document.getElementById('main-form__purchase').value,
-                              "law_number": document.getElementById('main-form__law').value,
+                              "reestr_number": document.getElementById('main-form__reestr_number').value,
+                              "purchase_number": document.getElementById('main-form__purchase_number').value,
+                              "law_number": document.getElementById('main-form__law_number').value,
                               "contract_method": document.getElementById('main-form__contract_method').value,
                               "contract_basis": document.getElementById('main-form__contract_basis').value,
                               "contract_number": document.getElementById('main-form__contract_number').value,
@@ -75,20 +146,21 @@ document.querySelectorAll('.chats__user').forEach(user => {
                               "contract_place": document.getElementById('main-form__contract_place').value,
                               "IKZ": document.getElementById('main-form__IKZ').value,
                               "budget": "Бюджетные средства",
-//                              "budget": document.getElementById('main-form__budget').value,
                               "contract_price": document.getElementById('main-form__сontract_price').value,
                               "prepayment": document.getElementById('main-form__prepayment').value,
                               "previous_document_id": null,
                               "document_status": "Создано"
                             }
                         };
-                        console.log(form);
+
+                        // console.log(form);
                         socket.send(JSON.stringify(form));
-                        
-//                        createElement('Здравствуйте!', 'to');
-//                        createElement('тут будет файл', 'to');
 
                         startForm.classList.add('hidden');
+                        inputList.querySelectorAll('input').forEach(item => item.value = '')
+                        document.getElementById('submit__btn').value = 'отправить';
+                        // createElement('Здравствуйте!', 'to');
+                        // createElement(form, 'to');
                         return false;
                     })
                     document.querySelector('.close-img').addEventListener('click', () => {
@@ -101,20 +173,21 @@ document.querySelectorAll('.chats__user').forEach(user => {
 
     // userIdNow = e.target.getAttribute('data-user_id');
 
-    // if (socket !== undefined){
-    //     socket.close();
-    // }
+    if (socket !== undefined){
+        socket.close();
+    }
 
-    socket = new WebSocket(`ws://192.168.8.130:8000/chats/ws/${e.target.getAttribute('data-user_id')}`);
+    socket = new WebSocket(`ws://192.168.8.129:8000/chats/ws/${e.target.getAttribute('data-user_id')}`);
     socket.onmessage = (message) => {
         let data = JSON.parse(JSON.parse(message.data));
-
+        let messageDirection;
         if (recipientId == data.author_id){
-            createElement(data.text, 'from');
+            messageDirection = "from"
         } else {
-            createElement(data.text, 'to');
-
+            messageDirection = "to"
         }
+        console.log(data)
+        createElement(data, messageDirection)
     }
      form.addEventListener('submit', send);
 
@@ -129,4 +202,3 @@ document.querySelectorAll('.chats__user').forEach(user => {
 //    }
 //
 //})
-

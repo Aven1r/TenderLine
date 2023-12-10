@@ -20,6 +20,10 @@ async def get_messages(recipient_id: int, limit: int = 10, skip: int = 0, user=D
     rez = await crud.get_messages(db, user.id, recipient_id)
     return rez
 
+@router.get('/message/{message_id}', response_model=Message)
+async def get_message(message_id: int, db=Depends(get_db)):
+    return await crud.get_message(db, message_id)
+
 
 @router.post('/messages/create', response_model=Message, dependencies=[Depends(get_user)])
 async def create_message(message: MessageCreate, user=Depends(get_user),  db=Depends(get_db)):
@@ -39,8 +43,17 @@ async def websocket_chat_endpoint(websocket: WebSocket, recipient_id: int, user=
             data = await websocket.receive_json()
             print(data)
             message = await crud.create_message(db, user.id, MessageCreate(**data, recipient_id=recipient_id))
-            await manager.send_message(user.id, message)
-            accepted_by_socket = await manager.send_message(recipient_id, message)
+            message_schema = {
+                'id': message.id,
+                'created_at': str(message.created_at),
+                'author_id': message.author_id,
+                'recipient_id': message.recipient_id,
+                'text':message.text,
+                'document':message.document.as_dict() if message.document else None
+            }
+            
+            await manager.send_message(user.id, message_schema)
+            accepted_by_socket = await manager.send_message(recipient_id, message_schema)
             print(accepted_by_socket)
             
             if not accepted_by_socket:
