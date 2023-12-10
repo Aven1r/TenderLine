@@ -19,7 +19,7 @@ async def create_document(document: DocumentCreate, db=Depends(get_db)):
     return await crud.create_document(db, document)
 
 
-@router.post('/getdiff', status_code=status.HTTP_200_OK)
+@router.get('/getdiff', status_code=status.HTTP_200_OK)
 async def get_gifference(doc_id: int, db=Depends(get_db)):
     document = await crud.get_document(db, doc_id)
     document_pre = await crud.get_document(db, document.previous_document_id)

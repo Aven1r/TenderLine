@@ -6,7 +6,7 @@ const inputList = document.getElementById('main-form__form');
 let socket;
 let recipientId;
 
-const ip = "http://192.168.8.130:8000"
+const ip = "http://misis52.itatmisis.ru"
 
 // Крестик закрывает вкладку
 document.querySelector('.close').addEventListener('click', (e) => {
@@ -30,23 +30,14 @@ function setup_data(data){
     fetch(ip+`/chats/message/${data.id}`)
     .then(response => response.json())
     .then(data => {
-        console.log(data)
         for (key in data['document']){
             document.getElementById(`main-form__${key}`).value = data['document'][key];
-        }
+        } 
         // startForm.classList.remove('hidden');
     })
        
 
 }
-
-
-// получение json с изменениями
-fetch('')
-.then(response => response.json())
-.then(data => {
-    //цикл по ключам, значениям. Заполнение формы
-})
 
 
 function get_from_string_id(value){
@@ -79,6 +70,46 @@ function collect_message_json(message_status){
     };
 }
 
+function changes (id){
+    let table = document.createElement('table');
+
+    // получение json с изменениями
+    fetch(ip+`/documents/getdiff/?doc_id=${id}`)
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        // let count = Object.keys(data).length;
+        for (key in data){
+            let tr = document.createElement('tr');
+            tr.innerHTML = key + ' : ' + data[key][0];
+            table.appendChild(tr);
+        } 
+        
+        //цикл по ключам, значениям. Заполнение формы
+    })
+    return table
+}
+function changes2 (id){
+    let table = document.createElement('table');
+
+    // получение json с изменениями
+    fetch(ip+`/documents/getdiff/?doc_id=${id}`)
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        // let count = Object.keys(data).length;
+        for (key in data){
+            let tr = document.createElement('tr');
+            tr.innerHTML =  'новое : ' + data[key][1];
+            table.appendChild(tr);
+        } 
+        
+        //цикл по ключам, значениям. Заполнение формы
+    })
+    return table
+}
+
+
 
 function createElement(data, path){
     let div = document.createElement('div');
@@ -106,9 +137,11 @@ function createElement(data, path){
                 })
                 
                 return
+                
 
             case 'Отредактировано':
-
+                let tabl = changes(2);  
+                let tabl2 = changes2(2);  
                 let str = `
                 <div class = message__${path}>
                     <div class="message__changed-head">
@@ -117,25 +150,12 @@ function createElement(data, path){
                     </div>
                     <p>Сводка изменений:</p>
                     <div class="table__block">
-                        <table>
-                            <tr>
-                                <td>значение</td>
-                                <td>старое</td>
-                            </tr>
-                            <tr>
-                                <td>значение</td>
-                                <td>старое</td>
-                            </tr>
-                            <tr>
-                                <td>значение</td>
-                                <td>старое</td>
-                            </tr>
-                        </table>
+                        
+                        <div id="table_${data.id}"></div>
                     
                         <form id="changes__shortForm">
-                            <div>новое<input type="checkbox" name="" id=""></div>
-                            <div>новое<input type="checkbox" name="" id=""></div>
-                            <div>новое<input type="checkbox" name="" id=""></div>
+                            <div id="div_${data.id}"></div>
+
                             <br />
                             <input id="change_${data.id}" type="button" value="редактировать">
                         </form>
@@ -146,6 +166,7 @@ function createElement(data, path){
                     <button id="btn-not_${data.id}" class="btn-not" >отказаться</button>
                 </div>`;
 
+
                 
 
                 // логика открытия и настройки формы
@@ -153,6 +174,9 @@ function createElement(data, path){
                 div.classList.add('messsage__changed');
                 path == 'to' ? div.style.marginLeft = 'auto' : div.style.marginLeft = 0;
                 messages.appendChild(div);
+
+                document.getElementById(`table_${data.id}`).appendChild(tabl)
+                document.getElementById(`div_${data.id}`).appendChild(tabl2)
 
                 // обработчик редактирования
                 document.getElementById(`change_${data.id}`).addEventListener('click', () => {
@@ -208,7 +232,6 @@ document.querySelectorAll('.chats__user').forEach(user => {
         fetch(ip+`/auth/user/${recipientId}`)
         .then(response => response.json())
         .then(data => {
-            console.log(document.querySelector('.recipient__name'))
             document.querySelector('.recipient__name').innerText = data.email
         })
 
@@ -220,7 +243,6 @@ document.querySelectorAll('.chats__user').forEach(user => {
             //----check length of messages
             if (data.length != 0){
                 data.forEach(userMess => {
-                    console.log(userMess);
                     let div = document.createElement('div');
                     let direction;
 
@@ -271,7 +293,7 @@ document.querySelectorAll('.chats__user').forEach(user => {
         socket.close();
     }
 
-    socket = new WebSocket(`ws://192.168.8.130:8000/chats/ws/${e.target.getAttribute('data-user_id')}`);
+    socket = new WebSocket(`ws://misis52.itatmisis.ru/chats/ws/${e.target.getAttribute('data-user_id')}`);
     socket.onmessage = (message) => {
         let data = JSON.parse(JSON.parse(message.data));
         let messageDirection;
@@ -280,7 +302,6 @@ document.querySelectorAll('.chats__user').forEach(user => {
         } else {
             messageDirection = "to"
         }
-        console.log(data)
         createElement(data, messageDirection)
     }
      form.addEventListener('submit', send);

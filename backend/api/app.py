@@ -16,7 +16,6 @@ abspath = os.path.abspath(__file__)
 sys.path.append(abspath[:abspath.find('backend')-1])
 from telegram.main import send_hi_message, start_bot
 
-
 def create_app() -> FastAPI:
     # loop = asyncio.get_event_loop()
     # loop.run_until_complete(init_models())
@@ -42,6 +41,6 @@ app = create_app()
 
 @app.on_event("startup")
 async def on_startup():
-    # await init_models()
+    await init_models()
     start_bot()
 
