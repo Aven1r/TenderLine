@@ -6,6 +6,8 @@ const inputList = document.getElementById('main-form__form');
 let socket;
 let recipientId;
 
+const ip = "http://192.168.8.130:8000"
+
 // Крестик закрывает вкладку
 document.querySelector('.close').addEventListener('click', (e) => {
     startForm.classList.add('hidden');
@@ -25,7 +27,7 @@ function setup_data(data){
 
     // startForm.classList.remove('hidden');
     
-    fetch(`http://192.168.8.130:8000/chats/message/${data.id}`)
+    fetch(ip+`/chats/message/${data.id}`)
     .then(response => response.json())
     .then(data => {
         console.log(data)
@@ -36,6 +38,11 @@ function setup_data(data){
     })
        
 
+}
+
+function get_from_string_id(value){
+    if (value == 'null') return null
+    else return parseInt(value)
 }
 
 // сбор полей с формы в json
@@ -57,7 +64,7 @@ function collect_message_json(message_status){
           "budget": "Бюджетные средства",
           "contract_price": document.getElementById('main-form__сontract_price').value,
           "prepayment": document.getElementById('main-form__prepayment').value,
-          "previous_document_id": null,
+          "previous_document_id": get_from_string_id(startForm.getAttribute('data-previous_id')),
           "document_status": message_status
         }
     };
@@ -78,19 +85,23 @@ function createElement(data, path){
                 div.className = 'message__to';
                 div.classList.add('open-file');
                 div.setAttribute('data-message_id', data.id)
+
                 messages.appendChild(div);
 
                 // логика открытия и настройки формы
-
                 div.addEventListener('click', () => {
                     startForm.classList.remove('hidden');
                     startForm.setAttribute('data-action', "Отредактировано")
+                    startForm.setAttribute('data-previous_id', data.document.id)
                     setup_data(data)
                 })
                 
                 return
 
             case 'Отредактировано':
+                // fetch(`http://192.168.8.130:8000/chats/message/${data.id}`)
+                // .then(response => response.json())
+                // .then(data => console.log())
                 let str = `
                 <div>
                     <h1>Договор №52</h1>
@@ -126,6 +137,7 @@ function createElement(data, path){
                 div.addEventListener('click', () => {
                     startForm.classList.remove('hidden');
                     startForm.setAttribute('data-action', "Отредактировано")
+                    startForm.setAttribute('data-previous_id', data.document.id)
                     setup_data(data)
                 })
                 
@@ -152,10 +164,16 @@ const send = (event) => {
 document.querySelectorAll('.chats__user').forEach(user => {
     user.addEventListener('click', (e) => {
         recipientId = e.target.getAttribute('data-user_id');
+        fetch(ip+`/auth/user/${recipientId}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log(document.querySelector('.recipient__name'))
+            document.querySelector('.recipient__name').innerText = data.email
+        })
 
         e.preventDefault();
         messages.innerHTML = '';
-        fetch(`http://192.168.8.130:8000/chats/messages?recipient_id=${e.target.getAttribute('data-user_id')}&limit=10&skip=0`)
+        fetch(ip+`/chats/messages?recipient_id=${e.target.getAttribute('data-user_id')}&limit=10&skip=0`)
         .then(response => response.json())
         .then(data => {
             //----check length of messages
