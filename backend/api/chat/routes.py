@@ -1,5 +1,5 @@
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect, Depends
-
+import sys    
 # from .managers import ConnectionManager, UserConnection
 from .managers import ConnectionManager, UserConnection
 from .schemas import MessageCreate, Message
@@ -7,6 +7,16 @@ from . import crud
 from ..dependencies import get_db, get_user
 from ..email.routers import email_notify
 from ..auth.crud import get_user_by_id
+from .schemas import User
+import json
+
+
+import os
+import sys
+
+abspath = os.path.abspath(__file__)
+sys.path.append(abspath[:abspath.find('backend')-1])
+from telegram.main import send_hi_message
 
 
 router = APIRouter(
@@ -51,7 +61,10 @@ async def websocket_chat_endpoint(websocket: WebSocket, recipient_id: int, user=
     except WebSocketDisconnect:
         manager.disconnect(user_connection)
 
-
+@router.get('/telegramtest')
+async def send_hi_message_to_telegram(current_user: User = Depends(get_user)):
+    await send_hi_message(current_user.telegram_id)
+    
 
 
 

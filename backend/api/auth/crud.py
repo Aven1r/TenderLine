@@ -2,6 +2,7 @@ from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from . import schemas
 from .models import User
+from .models import UserContractInfo
 
 
 async def create_user(session: AsyncSession, user: schemas.CreateUser) -> User:
@@ -9,6 +10,10 @@ async def create_user(session: AsyncSession, user: schemas.CreateUser) -> User:
     session.add(db_user)
     await session.commit()
     await session.refresh(db_user)
+
+    db_user_contract_info = UserContractInfo(user_id=db_user.id)
+    session.add(db_user_contract_info)
+    await session.commit()
     return db_user
 
 

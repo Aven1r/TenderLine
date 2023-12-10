@@ -5,6 +5,7 @@ from .schemas import CreateUser, User
 from ..dependencies import get_db
 from ..dependencies import get_user as get_current_user
 from . import crud
+import os
 
 router = APIRouter(
     prefix='/auth',

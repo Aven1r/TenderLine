@@ -49,3 +49,17 @@ class Document(BaseDocument):
     
     class Config:
         use_enum_values = True
+
+
+class UserContractInfo(BaseModel):
+    company_name: str
+    address: str
+    phone: str
+    checking_account: str
+    BIC: str
+    INN: str
+    KPP: str
+    OGRN: str
+    OKPO: str
+    ОКТМО: str
+    email: str

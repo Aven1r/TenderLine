@@ -13,6 +13,7 @@ class BaseUser(BaseModel):
     address: str
     email: EmailStr
     status: UserStatus
+    telegram_id: int
     password: str
 
     class Config:

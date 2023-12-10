@@ -1,6 +1,8 @@
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 from . import schemas
+from ..auth.schemas import User
+from .schemas import UserContractInfo
 from .models import Document
 import os
 from reportlab.platypus import PageBreak
@@ -14,6 +16,10 @@ from reportlab.platypus import SimpleDocTemplate, Paragraph, Frame, Table, Table
 from reportlab.lib.styles import ParagraphStyle, TA_CENTER, TA_JUSTIFY, TA_RIGHT
 
 
+async def get_document(session: AsyncSession, _id: int):
+    rez = await session.execute(select(Document).where(Document.id == _id))
+    return rez.scalar_one_or_none()
+
 async def create_document(session: AsyncSession, document: schemas.DocumentCreate) -> Document:
     document_db = Document(**document.model_dump())
     session.add(document_db)
@@ -22,17 +28,35 @@ async def create_document(session: AsyncSession, document: schemas.DocumentCreat
     return document_db
 
 
+translations = {
+    "status": "Cтатус",
+    "reestr_number": "Реестровый номер",
+    "purchase_number": "Осуществленная закупка",
+    "law_number": "Закон заключения контракта",
+    "contract_method": "Способ размещения",
+    "contract_basis": "Основание заключения",
+    "contract_number": "Номер контракта",
+    "contract_lifetime": "Срок действия",
+    "contract_subject": "Предмет контракта",
+    "contract_place": "Место поставки",
+    "IKZ": "ИКЗ",
+    "budget": "Источник финансирования",
+    "contract_price": "Цена контракта",
+    "prepayment": "Аванс",
+}
+
 async def get_difference(document1: schemas.Document, document2: schemas.Document):
     diffs = {}
 
     for key in document1.__dict__.keys():
         if document1.__dict__[key] != document2.__dict__[key]:
-            diffs[key] = (document1.__dict__[key], document2.__dict__[key])
+            russian_key = translations[key]
+            diffs[russian_key] = (document1.__dict__[key], document2.__dict__[key])
 
     return diffs
 
 
-async def generate_pdf(document: schemas.Document):
+async def generate_pdf(document: schemas.Document, user1: UserContractInfo, user2: UserContractInfo):
     pdfmetrics.registerFont(TTFont('TMR', os.path.abspath("backend/api/documents/fonts/TimesNewRoman.ttf")))
     pdfmetrics.registerFont(TTFont('TMRB', os.path.abspath("backend/api/documents/fonts/TimesNewRomanBold.ttf")))
 
@@ -45,17 +69,16 @@ async def generate_pdf(document: schemas.Document):
     doc = SimpleDocTemplate('backend/api/documents/generated/hackcontract.pdf', pagesize=letter)
     story = []
 
-    story.append(Paragraph("Договор №123", style_bold))
-    story.append(Paragraph("На поставку расходного материала (Сетка-слинг)", style_bold))
+    story.append(Paragraph("Договор №2024", style_bold))
+    story.append(Paragraph("На поставку Елочных игрушек", style_bold))
     story.append(Paragraph("<br/>\n<br/>", style))
 
     story.append(Paragraph("г. Пермь", left_allign))
     story.append(Paragraph("<br/>\n<br/>", style))
 
-    text = f"""ОБЩЕСТВО С ОГРАНИЧЕННОЙ ОТВЕТСТВЕННОСТЬЮ "КАМА-МЕДИКА", 
+    text = f"""{user1.company_name}, 
     в лице директора Агафонова Валерия Алексеевича, действующего на основании Устава, 
-    именуемый в дальнейшем «Поставщик» и Государственное бюджетное учреждение здравоохранения Пермского края 
-    «Клиническая медико-санитарная часть №1», в лице главного врача Михайленко Дениса Валерьевича, действующего на основании Устава, именуемый в дальнейшем «Заказчик», в соответствии с требованиями 
+    именуемый в дальнейшем «Поставщик» и {user2.company_name}, в лице главного врача Михайленко Дениса Валерьевича, действующего на основании Устава, именуемый в дальнейшем «Заказчик», в соответствии с требованиями 
     {document.contract_basis} Федерального закона от 05 апреля 2013 года {document.law_number} «О контрактной системе в сфере закупок товаров, работ, услуг для обеспечения государственных и муниципальных нужд», заключили настоящий Договор о нижеследующем:
     """
     story.append(Paragraph(text, style))
@@ -111,15 +134,11 @@ async def generate_pdf(document: schemas.Document):
     story.append(Paragraph("<br/>\n<br/>", style))
 
     story.append(Paragraph("6. ПРАВО СОБСТВЕННОСТИ", style_bold))
-    story.append(Paragraph(
-        "6.1. Право собственности на Товар переходит от Поставщика к Заказчику после приемки товара Заказчиком.",
-        style))
+    story.append(Paragraph("6.1. Право собственности на Товар переходит от Поставщика к Заказчику после приемки товара Заказчиком.",style))
     story.append(Paragraph("<br/>\n<br/>", style))
 
     story.append(Paragraph("7. ФОРС-МАЖОР", style_bold))
-    story.append(Paragraph(
-        "7.1. Сторона освобождается от ответственности за частичное или полное неисполнение обязательств по настоящему Договору, если это неисполнение явилось следствием обстоятельств непреодолимой силы, возникших после заключения настоящего Договора в результате событий, которые сторона не могла предвидеть и предотвратить разумными мерами.",
-        style))
+    story.append(Paragraph("7.1. Сторона освобождается от ответственности за частичное или полное неисполнение обязательств по настоящему Договору, если это неисполнение явилось следствием обстоятельств непреодолимой силы, возникших после заключения настоящего Договора в результате событий, которые сторона не могла предвидеть и предотвратить разумными мерами.",style))
     story.append(Paragraph("<br/>\n<br/>", style))
 
     story.append(Paragraph("8. ОТВЕТСТВЕННОСТЬ СТОРОН", style_bold))
@@ -138,9 +157,7 @@ async def generate_pdf(document: schemas.Document):
     story.append(Paragraph("<br/>\n<br/>", style))
 
     story.append(Paragraph("9. ГАРАНТИЙНЫЕ ОБЯЗАТЕЛЬСТВА", style_bold))
-    story.append(Paragraph(
-        f"9.1. Поставщик гарантирует качество и надежность поставленного товара в течение срока годности (прописанного в паспорте или инструкции по эксплуатации) с момента передачи товара Заказчику.",
-        style))
+    story.append(Paragraph(f"9.1. Поставщик гарантирует качество и надежность поставленного товара в течение срока годности (прописанного в паспорте или инструкции по эксплуатации) с момента передачи товара Заказчику.",style))
     story.append(Paragraph("<br/>\n<br/>", style))
 
     story.append(Paragraph("10. РАЗРЕШЕНИЕ СПОРОВ", style_bold))
@@ -158,41 +175,37 @@ async def generate_pdf(document: schemas.Document):
                 Приложение №4 - Форма документа о приемке Товара;<br/>
             """
     story.append(Paragraph(text, style))
-
     story.append(Paragraph("<br/>\n<br/>", style))
 
     story.append(Paragraph("11. ЮРИДИЧЕСКИЕ АДРЕСА И РЕКВИЗИТЫ СТОРОН", style_bold))
-
-    # TODO: Create paragraphs for each user information
     data = [
         [
-            Paragraph("""
-            ПОСТАВЩИК
-            ООО «КАМА-МЕДИКА»
-            Адрес: Российская Федерация, г. Пермь, ул. Монастырская, д. 12, оф. 308
-            ИНН 5902835222 
-            КПП 590201001
-            Банковские реквизиты:
-            Р/счет:	40702810049000002723 в Волго-Вятский банк  ПАО Сбербанк г. Нижний-Новгород,  К/счет: 30101810900000000603 БИК: 042202603
-            Телефон: 237-56-57
-            E-mail: kama-medika@mail.ru
+            Paragraph(f"""
+            ПОСТАВЩИК<br/>
+            {user1.company_name}<br/>
+            Адрес: {user1.address}<br/>
+            Телефон: {user1.phone} <br/>
+            Р/счет:	{user1.checking_account} <br/>  
+            БИК: {user1.BIC} <br/>
+            ИНН {user1.INN} <br/>
+            КПП {user1.KPP} <br/>
+            E-mail: {user1.email} <br/>
+            <br/>\n<br/>
+            <br/>\n<br/>
+            <br/>\n<br/>
         """, style),
-            Paragraph("""
-            ЗАКАЗЧИК
-            ГБУЗ «КМСЧ № 1»
-            614077, г. Пермь, Бульвар Гагарина, 68
-            Тел. (342) 205-58-68; 205-51-80;
-            факс 205-51-80
-            Получатель: Министерство финансов Пермского края (ГБУЗ «КМСЧ № 1» л/с 208200190, 228200190)
-            Р/счет 03224643570000005600 в Отделение ПЕРМЬ БАНКА РОССИИ/УФК по Пермскому краю г. Пермь
-            БИК 015773997   
-            ИНН 5904101322
-            КПП 590601001
-            ОГРН 1025900917481
-            ОКПО 01939676
-            ОКТМО 577010001
-            ОКАТО 57401380000
-            e-mail: Kmsch1zakup@mail.ru
+            Paragraph(f"""
+            ЗАКАЗЧИК <br/>
+            {user2.company_name}<br/>
+            Адрес: {user2.address}<br/>
+            Телефон: {user2.phone} <br/>
+            Р/счет:	{user2.checking_account} <br/>  
+            БИК: {user2.BIC} <br/>
+            ИНН {user2.INN} <br/>
+            КПП {user2.KPP} <br/>
+            ОГРН {user2.OGRN} <br/>
+            ОКПО {user2.OKPO}  <br/>
+            e-mail: {user2.email} <br/>
         """, style)
         ]
     ]
@@ -288,11 +301,11 @@ async def generate_pdf(document: schemas.Document):
         ],
         [
             Paragraph("1", style),
-            Paragraph("Сетка-слинг", style),
+            Paragraph("Игрушка-Елочка (Зеленая)", style),
             Paragraph("Штука", style),
-            Paragraph("24 500", style),
+            Paragraph("100", style),
             Paragraph("3", style),
-            Paragraph("73 500", style)
+            Paragraph("300", style)
         ]
     ])
 
@@ -310,3 +323,7 @@ async def generate_pdf(document: schemas.Document):
     story.append(product_table)
 
     doc.build(story)
+
+    return "backend/api/documents/generated/hackcontract.pdf"
+
+
