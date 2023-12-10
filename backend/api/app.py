@@ -32,6 +32,6 @@ app = create_app()
 
 @app.on_event("startup")
 async def on_startup():
-    # await init_models()
+    await init_models()
     pass
 

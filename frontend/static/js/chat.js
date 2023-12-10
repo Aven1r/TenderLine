@@ -6,7 +6,7 @@ const inputList = document.getElementById('main-form__form');
 let socket;
 let recipientId;
 
-const ip = "http://192.168.8.130:8000"
+const ip = "http://192.168.8.129:8000"
 
 // Крестик закрывает вкладку
 document.querySelector('.close').addEventListener('click', (e) => {
@@ -39,6 +39,15 @@ function setup_data(data){
        
 
 }
+
+
+// получение json с изменениями
+fetch('')
+.then(response => response.json())
+.then(data => {
+    //цикл по ключам, значениям. Заполнение формы
+})
+
 
 function get_from_string_id(value){
     if (value == 'null') return null
@@ -81,7 +90,7 @@ function createElement(data, path){
     } else {
         switch (data.document.document_status){
             case 'Создано':
-                div.innerHTML = '<p>Договор №52</p><img src="images/icons/file.svg"></img>';
+                div.innerHTML = '<p>Договор №52</p><p>📂</p>'
                 div.className = 'message__to';
                 div.classList.add('open-file');
                 div.setAttribute('data-message_id', data.id)
@@ -103,48 +112,79 @@ function createElement(data, path){
                 // .then(response => response.json())
                 // .then(data => console.log())
                 let str = `
-                <div>
-                    <h1>Договор №52</h1>
-                    <img src="{{ url_for('static', path='images/icons/download.svg') }}"></img>
-                </div>;
-                <p>Сводка изменений:</p>
-                <div>
-                    <table>
-                        <tr>
-                            <td>значение</td>
-                            <td>старое</td>
-                        </tr>
-                        <tr>
-                            <td>значение</td>
-                            <td>старое</td>
-                        </tr>
-                        <tr>
-                            <td>значение</td>
-                            <td>старое</td>
-                        </tr>
-                    </table>
-                    <img src="{{ url_for('static', path='images/icons/change.svg') }}"></img>
-                    <form id="changes__shortForm">
-                        <div><label for="">новое</label><input type="checkbox" name="" id=""></div>
-                        <div><label for="">новое</label><input type="checkbox" name="" id=""></div>
-                        <div><label for="">новое</label><input type="checkbox" name="" id=""></div>
-                        <br />
-                        <input type="submit" value="редактировать">
-                    </form>
+                <div class = message__${path}>
+                    <div class="message__changed-head">
+                        <h1>Договор №52</h1>
+                        <a class='download-file-icon' downloads href='#'>📥</a>
+                    </div>
+                    <p>Сводка изменений:</p>
+                    <div class="table__block">
+                        <table>
+                            <tr>
+                                <td>значение</td>
+                                <td>старое</td>
+                            </tr>
+                            <tr>
+                                <td>значение</td>
+                                <td>старое</td>
+                            </tr>
+                            <tr>
+                                <td>значение</td>
+                                <td>старое</td>
+                            </tr>
+                        </table>
+                    
+                        <form id="changes__shortForm">
+                            <div>новое<input type="checkbox" name="" id=""></div>
+                            <div>новое<input type="checkbox" name="" id=""></div>
+                            <div>новое<input type="checkbox" name="" id=""></div>
+                            <br />
+                            <input id="change_${data.id}" type="button" value="редактировать">
+                        </form>
+                    </div>
+                </div>
+                <div class="btns" id="btns_${data.id}">
+                    <button id="btn-ok_${data.id}" class="btn-ok" >согласиться</button>
+                    <button id="btn-not_${data.id}" class="btn-not" >отказаться</button>
                 </div>`;
 
                 // логика открытия и настройки формы
-                div.addEventListener('click', () => {
+                div.insertAdjacentHTML('beforeend', str);
+                div.classList.add('messsage__changed');
+                path == 'to' ? div.style.marginLeft = 'auto' : div.style.marginLeft = 0;
+                messages.appendChild(div);
+
+                // обработчик редактирования
+                document.getElementById(`change_${data.id}`).addEventListener('click', () => {
                     startForm.classList.remove('hidden');
                     startForm.setAttribute('data-action', "Отредактировано")
                     startForm.setAttribute('data-previous_id', data.document.id)
                     setup_data(data)
                 })
+
+                //обработчик кнопок
+                document.getElementById(`btns_${data.id}`).addEventListener('click', (e) => {
+                    switch (e.target) {
+                        // соглашение на заключение контракта
+                        case document.getElementById(`btn-ok_${data.id}`):
+                            console.log(200);
+                            break;
+
+                        // отказ от заключения контракта
+                        case document.getElementById(`btn-not_${data.id}`):
+                            messages.innerHTML = "<p>Спасибо, что воспользовались услугами нашего сервиса!</p>";
+                            console.log(404);
+                            document.getElementById('messages__input').setAttribute("disabled", "disabled");
+                            document.getElementById(`btn-ok_${data.id}`).setAttribute("disabled", "disabled");
+                            document.getElementById(`btn-not_${data.id}`).setAttribute("disabled", "disabled");
+                            break;
+                    }
+                })
+
                 
-                div.insertAdjacentHTML('beforeend', str);
-                div.className = 'message__from';
-                messages.appendChild(div);
-                return
+
+                return;
+
             case 'Подтверждено':
                 alert('3');
                 return
@@ -230,7 +270,7 @@ document.querySelectorAll('.chats__user').forEach(user => {
         socket.close();
     }
 
-    socket = new WebSocket(`ws://192.168.8.130:8000/chats/ws/${e.target.getAttribute('data-user_id')}`);
+    socket = new WebSocket(`ws://192.168.8.129:8000/chats/ws/${e.target.getAttribute('data-user_id')}`);
     socket.onmessage = (message) => {
         let data = JSON.parse(JSON.parse(message.data));
         let messageDirection;
