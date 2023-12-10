@@ -45,6 +45,9 @@ class Document(Base):
 
     previous_document_id = Column(Integer, ForeignKey('document.id'), nullable=True)
     message_id = Column(Integer, ForeignKey('message.id'), nullable=True)
+
+    def as_dict(self):
+        return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
     # message = relationship("Message", backref="document", foreign_keys=message_id)
 
 

@@ -62,15 +62,17 @@
         <section class="chat block">
             <div class="chats__user">
                 <div>
-                    <img src="{{ url_for('static', path='images/icons/user__chat.svg') }}" alt="" class="user__img">
+                    <img src="{{ url_for('static', path='images/icons/user__anonymous.svg') }}" alt="" class="user__img-chat">
                     <div class="user__info">
-                        <p class="user__name">Выберите чат, чтобы начать общение</p>
+                        <p class="user__name recipient__name">Выберите чат</p>
                         <p class="user__status"></p>
                     </div>
                 </div>
             </div>
             <div class="chats__messages">
-                <div class="messages"></div>
+                <div class="scroll">
+                    <div class="messages"></div>
+                </div>
                 <form id="messages__form">
                     <input placeholder="Введите текст" type="text" id="messages__input">
                     <input value="" id="input__send" type="submit">
@@ -89,19 +91,19 @@
             <form id="main-form__form">
                 <div>
                     <input placeholder="Статус" type="text" name="status" id="main-form__status">
-                    <input placeholder="Реестровый номер" type="text" name="registry-num" id="main-form__registry-num">
-                    <input placeholder="Осуществленная закупка" type="text" name="purchase" id="main-form__purchase">
-                    <input placeholder="Закон" type="text" name="law" id="main-form__law">
-                    <input placeholder="Способ осуществления закупки" type="text" name="way-purchase" id="main-form__way-purchase">
-                    <input placeholder="Номер" type="text" name="number" id="main-form__number">
-                    <input placeholder="Период действия" type="text" name="period" id="main-form__period">
-                    <input placeholder="Предмет контракта" type="text" name="itemOfContract" id="main-form__itemOfContract">
-                    <input placeholder="Место заключения" type="text" name="place" id="main-form__place">
-                    <input placeholder="ИКЗ" type="text" name="ikz" id="main-form__ikz">
-                    <input placeholder="Источник финансирования" type="text" name="source" id="main-form__source">
-                    <input placeholder="Сумма" type="text" name="summ" id="main-form__summ">
-                    <input placeholder="Сумма" type="text" name="summ" id="main-form__summ">
-                    <input placeholder="Сумма" type="text" name="summ" id="main-form__summ">
+                    <input placeholder="Реестровый номер" type="text" name="reestr_number" id="main-form__reestr_number">
+                    <input placeholder="Осуществленная закупка" type="text" name="purchase_number" id="main-form__purchase_number">
+                    <input placeholder="Закон" type="text" name="law_number" id="main-form__law_number">
+                    <input placeholder="Способ осуществления закупки" type="text" name="contract_method" id="main-form__contract_method">
+                    <input placeholder="Основание заключения" type="text" name="contract_basis" id="main-form__contract_basis">
+                    <input placeholder="Номер" type="text" name="contract_number" id="main-form__contract_number">
+                    <input placeholder="Период действия" type="text" name="contract_lifetime" id="main-form__contract_lifetime">
+                    <input placeholder="Предмет контракта" type="text" name="contract_subject" id="main-form__contract_subject">
+                    <input placeholder="Место заключения" type="text" name="contract_place" id="main-form__contract_place">
+                    <input placeholder="ИКЗ" type="text" name="IKZ" id="main-form__IKZ">
+                    <input placeholder="Источник финансирования" type="text" name="budget" id="main-form__budget">
+                    <input placeholder="Сумма" type="text" name="сontract_price" id="main-form__сontract_price">
+                    <input placeholder="Аванс" type="text" name="prepayment" id="main-form__prepayment">
                 </div>
                 <input value="отправить" type="submit" name="submit" id="submit__btn">
             </form>

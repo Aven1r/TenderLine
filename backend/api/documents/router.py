@@ -20,8 +20,11 @@ async def create_document(document: DocumentCreate, db=Depends(get_db)):
 
 
 @router.post('/getdiff', status_code=status.HTTP_200_OK)
-async def get_gifference(document: Document, document2: Document):
-    return await crud.get_difference(document, document2)
+async def get_gifference(doc_id: int, db=Depends(get_db)):
+    document = await crud.get_document(db, doc_id)
+    document_pre = await crud.get_document(db, document.previous_document_id)
+    print(document, document_pre)
+    return await crud.get_difference(document.as_dict(), document_pre.as_dict())
 
 
 @router.get('/downloadpdf', status_code=status.HTTP_200_OK)

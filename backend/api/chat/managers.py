@@ -28,10 +28,10 @@ class ConnectionManager:
     def disconnect(self, connection: UserConnection):
         self.active_connections.remove(connection)
 
-    async def send_message(self, recipient_id: int, message: Message) -> bool:
+    async def send_message(self, recipient_id: int, message) -> bool:
         for connection in self.active_connections:
             if connection.user_id == recipient_id:
-                await connection.websocket.send_json(json.dumps(message.as_dict()))
+                await connection.websocket.send_json(json.dumps(message))
                 return True
         return False
 

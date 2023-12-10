@@ -30,8 +30,8 @@ class BaseDocument(BaseModel):
     contract_place: str
     IKZ: str
     budget: BudgetSource
-    contract_price: int
-    prepayment: int
+    contract_price: str
+    prepayment: str
     
     previous_document_id: int | None = None
     document_status: DocumentStatus = DocumentStatus.CREATED

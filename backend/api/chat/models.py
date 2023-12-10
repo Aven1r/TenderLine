@@ -14,7 +14,6 @@ class Message(Base):
     document = relationship('Document', uselist=False, lazy="immediate")
     created_at = Column(DateTime, default=datetime.utcnow)
 
-    def as_dict(self):
-        return {c.name: str(getattr(self, c.name)) for c in self.__table__.columns}
+   
 
 

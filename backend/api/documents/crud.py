@@ -45,13 +45,14 @@ translations = {
     "prepayment": "Аванс",
 }
 
-async def get_difference(document1: schemas.Document, document2: schemas.Document):
+async def get_difference(document1: dict, document2: dict):
+    exclude_fields = ['id', 'previous_document_id', 'document_status', 'message_id']
     diffs = {}
 
-    for key in document1.__dict__.keys():
-        if document1.__dict__[key] != document2.__dict__[key]:
+    for key in document1.keys():
+        if (document1[key] != document2[key]) and key not in exclude_fields:
             russian_key = translations[key]
-            diffs[russian_key] = (document1.__dict__[key], document2.__dict__[key])
+            diffs[russian_key] = (document1[key], document2[key])
 
     return diffs
 

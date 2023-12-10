@@ -55,8 +55,8 @@ async def process_name(message: Message, state: FSMContext) -> None:
     await state.finish()
 
 
-async def send_hi_message(telegram_id: int) -> None:
-    await bot.send_message(telegram_id, "Пришло уведомление")
+async def send_hi_message(telegram_id: int, text: str) -> None:
+    await bot.send_message(telegram_id, text)
 
 
 async def main() -> None:

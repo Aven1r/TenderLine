@@ -34,9 +34,9 @@ async def get_messages(session: AsyncSession, first_user_id: int, second_user_id
 
 
 
-# async def get_message(session: AsyncSession, chat_id: int, message_id: int) -> Message:
-#     rez = await session.execute(select(Message).where(Message.chat_id == chat_id and Message.id == message_id))
-#     return rez.scalar_one_or_none()
+async def get_message(session: AsyncSession, message_id: int) -> Message:
+    rez = await session.execute(select(Message).where(Message.id == message_id))
+    return rez.scalar_one_or_none()
 
 
 # async def create_message(session: AsyncSession, message: schemas.MessageCreate,  user_id: int) -> Message:
