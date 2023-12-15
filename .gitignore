@@ -5,3 +5,7 @@ env/
 *.pyd
 __pycache__
 db.db
+*.idea
+*.pytest_cache
+*.vscode
+*.db
