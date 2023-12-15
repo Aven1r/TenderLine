@@ -1,7 +1,7 @@
 <div align='center' >
 <img src='docs/images/Frame 90.svg' width='30%'>
 </div>
-<h1 style="text-align: center;">TenderLine</h1>
+<h1 align='center'>TenderLine</h1>
 
 TenderLine - service for communication between the supplier and the customer within the framework of agreeing on a future contract. Chat messages are forms for making changes to the contract, and as a result, both participants receive a ready-generated PDF document. There is also support for notifications of new messages via [telegram bot](https://t.me/Tendebot) and mail. 
 
